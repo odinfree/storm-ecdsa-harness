@@ -156,8 +156,22 @@ agent instructions or used as a preflight before route work:
   and stop condition before CPU/GPU dispatch.
 - `skills/multi-agent-handoff.md`: make cross-worker handoffs explicit with
   ACKs, validators, and kill gates.
+- `skills/benchmark-frontier-archaeology.md`: walk adjacent public frontier
+  submissions to extract transferable levers, reject search artifacts, and name
+  the next binder.
 - `skills/circuit-diff-mining.md`: mine recent promoted diffs into bounded
   candidate probes without stale knob copying.
+- `skills/circuit-optimization-intake.md`: turn route ideas into ranked,
+  source-bound packets with score estimates, falsifiers, and repair-before-hunt
+  gates.
+- `skills/peak-qubit-reduction.md`: inventory live-set binders, co-binder
+  plateaus, and qubit-Toffoli tradeoffs before structural width cuts.
+- `skills/toffoli-reduction.md`: classify emitted/executed Toffoli hot spots
+  and gate count-cut primitives before promoting a Toffoli route.
+- `skills/reversible-circuit-validation.md`: validate candidate routes across
+  classical, phase, and ancilla channels before clean or submit language.
+- `skills/island-hunting-bakeoff.md`: compare score-eligible routes with
+  equal-size pilot scans before committing large GPU ranges.
 - `skills/submission-forensics.md`: deep-audit public submissions, notes,
   promoted diffs, and adjacent frontier moves without private-state leakage or
   credit overclaiming.
@@ -322,7 +336,13 @@ The bridge names are:
 - `validation-submit-gate`
 - `route-compute-gate`
 - `multi-agent-handoff`
+- `benchmark-frontier-archaeology`
 - `circuit-diff-mining`
+- `circuit-optimization-intake`
+- `peak-qubit-reduction`
+- `toffoli-reduction`
+- `reversible-circuit-validation`
+- `island-hunting-bakeoff`
 - `submission-forensics`
 - `bluesky-route-salvage`
 - `redsky-frontier-audit`
@@ -374,10 +394,15 @@ Useful global skills for ECDSA work, when installed in the agent environment:
 
 Common call chains:
 
+- Full route-intake stack: `frontier-lock` ->
+  `benchmark-frontier-archaeology` -> `circuit-optimization-intake` ->
+  `peak-qubit-reduction` / `toffoli-reduction` ->
+  `reversible-circuit-validation` -> `island-hunting-bakeoff` ->
+  `route-compute-gate` -> `validation-submit-gate`.
 - Exact skip mining: `frontier-lock` -> `exact-support-miner` ->
   `redsky-frontier-audit` -> `validation-submit-gate`.
 - Frontier shift: `frontier-lock` -> `nasqret-playbook` ->
-  `circuit-diff-mining`.
+  `benchmark-frontier-archaeology` -> `circuit-diff-mining`.
 - New route: `frontier-lock` -> `bluesky-route-salvage` ->
   `redsky-frontier-audit` -> `route-compute-gate`.
 - External critique: `deepseek-pressure-test` -> `redsky-frontier-audit`.
