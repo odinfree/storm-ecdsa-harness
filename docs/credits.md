@@ -27,10 +27,12 @@ or benchmark harness.
 - **Jieyi Long**: public GPU toolkit and `ecdsafail_skills` process discipline:
   validate-all, route packets, canaries, and careful GPU-scanner interpretation.
 - **tanweai / PUA Skill contributors**: English PIP-style repeated-failure
-  discipline adapted into `skills/pip-discipline.md`. Storm imports only the
-  local prompt-card methodology and completion-evidence checklist; it does not
-  import plugin hooks, telemetry, feedback upload, leaderboard, survey, remote
-  prompt loading, or always-on behavior. Public repo:
+  discipline adapted into `skills/pip-discipline.md` and the general
+  `skills/evidence-first-recovery.md`. The general card removes ECDSA routing
+  and performance-pressure rhetoric. Storm imports only the prompt-card method
+  and completion-evidence checklist; it does not import plugin hooks,
+  telemetry, feedback upload, leaderboard, survey, remote prompt loading, or
+  always-on behavior. Public repo:
   <https://github.com/tanweai/pua>.
 - **BitWonka**: public frontier process inspiration: promoted-diff discipline,
   lifecycle/free-reacquire accounting, reachable-support codec thinking, and
