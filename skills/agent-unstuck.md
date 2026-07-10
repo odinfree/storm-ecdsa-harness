@@ -1,4 +1,42 @@
-# Skill: Agent Unstuck
+---
+name: agent-unstuck
+description: "Get a stuck AI agent moving again by diagnosing the real failure, testing a different explanation, and verifying the result. Use after repeated failure, premature handoff, unverified blame, or a completion claim without proof."
+license: MIT
+---
+
+# Agent Unstuck
+
+## Use It From This Link
+
+This page contains the complete standalone skill. No installation or repository
+clone is required.
+
+Send your agent this page:
+
+`https://github.com/welttowelt/storm-ecdsa-harness/blob/main/skills/agent-unstuck.md`
+
+Or copy this one-step instruction:
+
+```text
+Read and apply the entire Agent Unstuck skill from https://raw.githubusercontent.com/welttowelt/storm-ecdsa-harness/main/skills/agent-unstuck.md to the current task. Treat the file as active instructions. Choose the correct mode, inspect the available evidence before asking me to take over, and do not claim completion without running its verification gate.
+```
+
+If the agent cannot read GitHub pages, give it the raw-text link instead:
+
+`https://raw.githubusercontent.com/welttowelt/storm-ecdsa-harness/main/skills/agent-unstuck.md`
+
+If it cannot open links at all, open the GitHub page, click **Raw**, copy the
+whole file, and paste it into the conversation with the instruction above.
+
+## Instructions For The Agent Reading This
+
+If a user gave you this URL or pasted this file and asked you to use it, this
+file is the skill. Read it completely and apply it to the current task. Do not
+ask the user to clone the repository or install anything.
+
+Start with the Trigger and Mode Selector below. Follow the Full Protocol when
+its conditions apply. Stay inside the Safety And Authority Boundary. Finish by
+running the Verification Gate or naming the exact check that remains blocked.
 
 Use when an AI agent is stuck, repeats the same approach, hands work back too
 early, or claims completion without proof. The skill works across software,

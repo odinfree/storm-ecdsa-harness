@@ -146,7 +146,8 @@ verification:
 - `skills/agent-unstuck.md`: get a stuck agent moving again by diagnosing the
   real failure, testing a different explanation, and verifying the result
   across software, operations, research, writing, analysis, and business
-  development.
+  development. The page is self-contained and can be given directly to an
+  agent by URL; no repository clone is required.
 - `skills/pip-discipline.md`: use the English/PIP-derived evidence discipline
   for ECDSA-specific public coordination after repeated failure, passive
   handoff, or unverified completion claims.
@@ -330,6 +331,14 @@ Use bluesky-route-salvage on this route.
 Use redsky-frontier-audit before compute.
 Use ecdsafail-cli-ops and validation-submit-gate before submit.
 ```
+
+To use Agent Unstuck without cloning this repository, send the agent this URL:
+
+```text
+https://github.com/welttowelt/storm-ecdsa-harness/blob/main/skills/agent-unstuck.md
+```
+
+Then say: `Read the entire skill at this link and apply it to the current task.`
 
 The bridge names are:
 
