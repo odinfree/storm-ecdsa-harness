@@ -128,7 +128,8 @@ endorsement where there was only inspiration.
 ## Skill Cards
 
 The `skills/` directory contains prompt cards that can be copied into agent
-instructions or used as a preflight before route work and general recovery:
+instructions or used as a preflight before route work, diagnosis, and
+verification:
 
 - `skills/nasqret-playbook.md`: build route slates before scaling compute.
 - `skills/deepseek-pressure-test.md`: ask an external worker to try to kill a
@@ -142,9 +143,9 @@ instructions or used as a preflight before route work and general recovery:
 - `scripts/storm-bluesky-redsky-loop-gate.py`: validate a five-loop
   Bluesky/Redsky process packet with implemented findings and no compute/submit
   overclaim.
-- `skills/evidence-first-recovery.md`: recover stalled AI work across software,
-  operations, research, analysis, writing, and business development by turning
-  uncertainty into bounded checks and completion evidence.
+- `skills/diagnose-test-verify.md`: diagnose stalled or unverified work, run the
+  smallest useful test, and verify completion across software, operations,
+  research, writing, analysis, and business development.
 - `skills/pip-discipline.md`: use the English/PIP-derived evidence discipline
   for ECDSA-specific public coordination after repeated failure, passive
   handoff, or unverified completion claims.
@@ -314,8 +315,9 @@ instructions or used as a preflight before route work and general recovery:
 - `skills/paper-dead-gate-elimination.md`: regenerate and audit dead-drop
   index files after op-stream edits; never reuse stale `.idx` proof artifacts.
 
-Codex-style agents can also discover the general recovery, ECDSA-specific PIP,
-and audit cards through the repo-local bridges under `.agents/skills/`.
+Codex-style agents can also discover the general Diagnose, Test, Verify card,
+the ECDSA-specific PIP card, and the audit cards through the repo-local bridges
+under `.agents/skills/`.
 
 ## How To Call The Skills
 
@@ -332,7 +334,7 @@ The bridge names are:
 
 - `nasqret-playbook`
 - `deepseek-pressure-test`
-- `evidence-first-recovery`
+- `diagnose-test-verify`
 - `pip-discipline`
 - `tony-rci-audit`
 - `exact-support-miner`
@@ -399,8 +401,8 @@ Useful global skills for ECDSA work, when installed in the agent environment:
 Common call chains:
 
 - General company work after repeated failure or an unverified completion
-  claim: `evidence-first-recovery`; add `tony-rci-audit` when revising an
-  existing artifact.
+  claim: `diagnose-test-verify`; add `tony-rci-audit` when revising an existing
+  artifact.
 - Full route-intake stack: `frontier-lock` ->
   `benchmark-frontier-archaeology` -> `circuit-optimization-intake` ->
   `peak-qubit-reduction` / `toffoli-reduction` ->

@@ -28,7 +28,7 @@ or benchmark harness.
   validate-all, route packets, canaries, and careful GPU-scanner interpretation.
 - **tanweai / PUA Skill contributors**: English PIP-style repeated-failure
   discipline adapted into `skills/pip-discipline.md` and the general
-  `skills/evidence-first-recovery.md`. The general card removes ECDSA routing
+  `skills/diagnose-test-verify.md`. The general card removes ECDSA routing
   and performance-pressure rhetoric. Storm imports only the prompt-card method
   and completion-evidence checklist; it does not import plugin hooks,
   telemetry, feedback upload, leaderboard, survey, remote prompt loading, or

@@ -228,7 +228,7 @@ for path in \
   patches/eval-fast-exit-dirty-triage.patch \
   skills/nasqret-playbook.md \
   skills/deepseek-pressure-test.md \
-  skills/evidence-first-recovery.md \
+  skills/diagnose-test-verify.md \
   skills/pip-discipline.md \
   skills/exact-support-miner.md \
   skills/frontier-lock.md \
@@ -301,7 +301,7 @@ for path in \
   skills/apply-overlap-ledger.md \
   .agents/skills/nasqret-playbook/SKILL.md \
   .agents/skills/deepseek-pressure-test/SKILL.md \
-  .agents/skills/evidence-first-recovery/SKILL.md \
+  .agents/skills/diagnose-test-verify/SKILL.md \
   .agents/skills/pip-discipline/SKILL.md \
   .agents/skills/exact-support-miner/SKILL.md \
   .agents/skills/frontier-lock/SKILL.md \
@@ -396,10 +396,10 @@ need_text skills/bluesky-audit.md "bounded experiment" "bounded experiment"
 need_text skills/bluesky-audit.md "stop condition" "Stop condition"
 need_text skills/redsky-audit.md "strongest objection" "Strongest objection"
 need_text skills/redsky-audit.md "fastest falsifier" "Fastest falsifier"
-need_text skills/evidence-first-recovery.md "work-type selector" "Work-Type Selector"
-need_text skills/evidence-first-recovery.md "authority boundary" "Safety And Authority Boundary"
-need_text skills/evidence-first-recovery.md "completion gate" "Completion Gate"
-need_text .agents/skills/evidence-first-recovery/SKILL.md "bridge" "Codex-discoverable bridge"
+need_text skills/diagnose-test-verify.md "mode selector" "Mode Selector"
+need_text skills/diagnose-test-verify.md "work-type guide" "Work-Type Guide"
+need_text skills/diagnose-test-verify.md "verification gate" "Verification Gate"
+need_text .agents/skills/diagnose-test-verify/SKILL.md "bridge" "Codex-discoverable bridge"
 need_text .agents/skills/tony-rci-audit/SKILL.md "bridge" "Codex-discoverable bridge"
 need_text .agents/skills/bluesky-audit/SKILL.md "bridge" "Codex-discoverable bridge"
 need_text .agents/skills/redsky-audit/SKILL.md "bridge" "Codex-discoverable bridge"
