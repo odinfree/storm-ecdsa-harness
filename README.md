@@ -143,9 +143,10 @@ verification:
 - `scripts/storm-bluesky-redsky-loop-gate.py`: validate a five-loop
   Bluesky/Redsky process packet with implemented findings and no compute/submit
   overclaim.
-- `skills/diagnose-test-verify.md`: diagnose stalled or unverified work, run the
-  smallest useful test, and verify completion across software, operations,
-  research, writing, analysis, and business development.
+- `skills/agent-unstuck.md`: get a stuck agent moving again by diagnosing the
+  real failure, testing a different explanation, and verifying the result
+  across software, operations, research, writing, analysis, and business
+  development.
 - `skills/pip-discipline.md`: use the English/PIP-derived evidence discipline
   for ECDSA-specific public coordination after repeated failure, passive
   handoff, or unverified completion claims.
@@ -315,8 +316,8 @@ verification:
 - `skills/paper-dead-gate-elimination.md`: regenerate and audit dead-drop
   index files after op-stream edits; never reuse stale `.idx` proof artifacts.
 
-Codex-style agents can also discover the general Diagnose, Test, Verify card,
-the ECDSA-specific PIP card, and the audit cards through the repo-local bridges
+Codex-style agents can also discover the general Agent Unstuck card, the
+ECDSA-specific PIP card, and the audit cards through the repo-local bridges
 under `.agents/skills/`.
 
 ## How To Call The Skills
@@ -334,7 +335,7 @@ The bridge names are:
 
 - `nasqret-playbook`
 - `deepseek-pressure-test`
-- `diagnose-test-verify`
+- `agent-unstuck`
 - `pip-discipline`
 - `tony-rci-audit`
 - `exact-support-miner`
@@ -401,7 +402,7 @@ Useful global skills for ECDSA work, when installed in the agent environment:
 Common call chains:
 
 - General company work after repeated failure or an unverified completion
-  claim: `diagnose-test-verify`; add `tony-rci-audit` when revising an existing
+  claim: `agent-unstuck`; add `tony-rci-audit` when revising an existing
   artifact.
 - Full route-intake stack: `frontier-lock` ->
   `benchmark-frontier-archaeology` -> `circuit-optimization-intake` ->

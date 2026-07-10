@@ -54,7 +54,7 @@ credits:
     notes: >
       Storm adapts the repeated-failure methodology and completion-evidence
       checklist into skills/pip-discipline.md and
-      skills/diagnose-test-verify.md. The general card removes ECDSA routing
+      skills/agent-unstuck.md. The general card removes ECDSA routing
       and performance-pressure rhetoric. Neither card imports plugin hooks,
       telemetry, feedback upload, leaderboard, survey, remote prompt loading,
       or always-on behavior.

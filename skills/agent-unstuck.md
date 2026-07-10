@@ -1,10 +1,10 @@
-# Skill: Diagnose, Test, Verify
+# Skill: Agent Unstuck
 
-Use when work is stuck, an explanation has not been checked, a handoff is
-premature, or a completion claim needs proof. The method works across software,
+Use when an AI agent is stuck, repeats the same approach, hands work back too
+early, or claims completion without proof. The skill works across software,
 operations, research, analysis, writing, and business development.
 
-## What This Skill Does
+## How It Gets Unstuck
 
 1. **Diagnose:** read the direct evidence, reconstruct what happened, and find
    the assumption shared by the failed attempts.
@@ -144,7 +144,7 @@ Maintain a concise record of observable evidence and decisions. Do not expose
 hidden chain-of-thought or speculative internal reasoning.
 
 ```text
-Diagnose, Test, Verify:
+Agent Unstuck:
 - Outcome and proof:
 - Direct evidence:
 - Attempts and shared assumption:
@@ -184,9 +184,9 @@ smallest next decision.
 ## Example Calls
 
 ```text
-Use diagnose-test-verify on this build failure. Two patches have failed.
-Use diagnose-test-verify before calling this research memo verified.
-Use diagnose-test-verify on this account brief and separate facts from assumptions.
+Use agent-unstuck on this build failure. Two patches have failed.
+Use agent-unstuck before calling this research memo verified.
+Use agent-unstuck on this account brief and separate facts from assumptions.
 ```
 
 ## Examples
