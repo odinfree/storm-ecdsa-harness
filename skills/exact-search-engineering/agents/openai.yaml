@@ -1,0 +1,6 @@
+interface:
+  display_name: "Exact Search Engineering"
+  short_description: "Engineer fast exact searches with replayable coverage"
+  default_prompt: "Use $exact-search-engineering to build or optimize this exact finite search."
+policy:
+  allow_implicit_invocation: true

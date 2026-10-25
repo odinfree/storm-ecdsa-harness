@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fast Lean Proof Loop"
+  short_description: "Build affected Lean modules and verify exact lemma names"
+  default_prompt: "Use $fast-lean-proof-loop to plan the affected Lean closure, verify lemma names, and iterate without weakening the promotion gate."
+policy:
+  allow_implicit_invocation: true
+

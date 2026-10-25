@@ -1,568 +1,139 @@
-# Storm ECDSA Harness
+# Storm skills
 
-Public repo: <https://github.com/welttowelt/storm-ecdsa-harness>
+Agent skills for long optimization campaigns on open benchmarks. They come out of our work since June 2026 on
+[ecdsa.fail](https://ecdsa.fail) (quantum circuits for secp256k1 point addition), the
+[Proximity Prize](https://better.codes) (Lean proofs about codes) and Kaggle's "Squares in Squares", and from the
+people whose public notes taught us most of what is here.
 
-Fixture dashboard: <https://welttowelt.github.io/storm-ecdsa-harness/>
+Each skill is a folder with a `SKILL.md` that Claude Code, Codex and other agents load when a task calls for it.
+Where a skill is built on someone else's work, the table says so, and [CREDITS.md](CREDITS.md) gives the source and
+licence.
 
-Storm is the public release of the STORM harness in production: an operator
-control plane for coordinating public `ecdsa.fail` research workflows. It is the
-layer around the solver: deciding what receives attention, forcing evidence
-labels, routing workers, gating compute, recording ACKs, and keeping public
-notes safe to share. The edge is multi-model collaboration: different workers
-can contribute through mailbox, API handoffs, or a named Zellij multiplexer
-board, but every claim still has to pass the same evidence, critique, and
-validation gates. It is not the original benchmark harness and it does not
-contain private hunt state.
-
-Purpose and limits: `ecdsa.fail` is a public resource-estimation benchmark for
-the quantum cost of one `secp256k1` point-add circuit. This repo contains
-workflow templates, evidence discipline, dashboard fixtures, and safety checks.
-It does not provide target selection, key recovery, private compute endpoints,
-raw scan logs, unreleased nonces, or live candidate diffs.
-
-## STORM Harness In Production
-
-The live STORM controller is private. It refreshes the public leaderboard,
-reads the shared worker mailbox, creates route packets, dispatches CPU/GPU work,
-runs official validation, and opens the submit gate only after a fresh score
-check and explicit submit flag.
-
-This public repo is the reusable release surface for that setup. It contains the
-protocol, templates, fixture dashboard, operator cards, and redaction checks so
-other OSS teams can copy the coordination layer without inheriting private
-state.
-
-See [docs/production-shape.md](docs/production-shape.md) for the exact
-production-to-public mapping.
-
-## Zellij Control Plane Template
-
-The current production pattern moved from loose manual terminal sessions plus a
-mailbox into one explicit Zellij board. The board gives the boss lane, policy
-surface, dispatch queue, wallbreakers, audit lanes, benchmark lane, provider
-governance lane, and long-context workers a stable place to live and resume.
-
-Read [docs/zellij-control-plane.md](docs/zellij-control-plane.md) for the
-detailed model. Copy [templates/zellij-control-plane/](templates/zellij-control-plane/)
-into a private controller repo when you want a starter board with:
-
-- `layouts/fleet.kdl` for the tab layout,
-- `bin/start-zellij` and role launchers,
-- policy and worker TSV examples,
-- role goal prompts for boss, auditor, wallbreakers, Codex workers, and Claude
-  long-context workers.
-
-The template is intentionally public-safe. It contains no private worker hosts,
-provider account data, logs, raw nonces, live candidate state, or submit
-authority.
-
-## Operator Edge
-
-Agentic benchmark work fails quietly when teams trust memory, chase stale
-routes, spend compute without a kill gate, or promote scanner hits into public
-claims too early. Storm makes that operating layer explicit:
-
-- **Current-target lock:** every cycle starts from refreshed public benchmark
-  state, not chat memory.
-- **Route packets:** every idea names the claim, evidence level, validator,
-  owner, budget, and falsifier before it receives compute.
-- **Multi-model workers:** Codex-, Claude-, and DeepSeek-style workers can plug
-  in as research leads, engineering specialists, deep researchers, or external
-  pressure-test reviewers.
-- **Critique loop:** constructive reviews, skeptical reviews, source checks, and
-  smallest-useful-fix passes run before compute or public claims.
-- **Compute gate:** CPU/GPU work is allowed only when a route has a predicate,
-  validator, owner, budget, and stop condition.
-- **Submit gate:** no win language until fresh frontier recheck, official local
-  validation, score win, legal diff, public note, and explicit submit flag.
-- **Public boundary:** dashboards, examples, and notes stay fixture/public-only
-  while private logs, endpoints, routes, and nonces stay out.
-
-The repo is therefore not a faster circuit generator by itself. It is a way to
-make a group of agents and humans behave like a disciplined research desk.
-
-## Lineage
-
-- Base challenge / benchmark lineage: Gautham Anant and the public
-  `ecdsa.fail` challenge. The public framing is described in Sreeram Kannan's
-  article: <https://www.linkedin.com/pulse/you-beat-google-sreeram-kannan-rqehc>.
-- Early custom agent-harness inspiration: Gajesh Naik / Gajesh2007, including
-  custom agent workflows, goal-mode style operation, model/subagent routing, and
-  more agent-readable code organization.
-- Storm contribution: the STORM harness control-plane layer:
-  mailbox protocol, ACK/read receipts, route packets, worker roles, dashboard
-  views, compute gates, submit gates, and redaction discipline.
-
-See [docs/credits.md](docs/credits.md) and [CREDITS.yaml](CREDITS.yaml) for
-explicit attribution. Credits are split into direct tools, public sources, and
-group-discussion process inspiration so the repo does not imply copied code or
-endorsement where there was only inspiration.
-
-## What This Repo Contains
-
-- A current-target-first operating model.
-- A production-shape map for the live STORM controller.
-- Worker role cards and handoff templates.
-- Public operator cards under `operators/` for Kimi Storm, Deep Storm, and
-  Codex Storm handoffs.
-- Historical route packets under `routes/` with falsification status where
-  known.
-- Critique-before-compute audit loop.
-- Evidence labels and validation gates.
-- Route packet and compute request templates.
-- External pressure-test worker prompt pattern.
-- Safe filled examples for the templates.
-- A fixture-only dashboard for operator status.
-- A redaction checklist and automated redaction scan.
-- Machine-readable claim-ledger, proof-backlog, pod-admission, and state-packet
-  helper scripts for running short control loops without private state.
-- Public carry-toy gates that separate value/recompute hypotheses from compute
-  or submit authorization.
-- Public patch packages for source-preserving throughput helpers that require
-  their own validation gates before use.
-- Public-credit policy for community-derived ideas.
-- Repo-local Codex skill bridges for ECDSA workflow agents.
-- A sanitized Zellij multiplexer control-plane template for replacing manual
-  session sprawl with named tabs, visible gates, dispatch state, and role goals.
-
-## Skill Cards
-
-The `skills/` directory contains prompt cards that can be copied into agent
-instructions or used as a preflight before route work, diagnosis, and
-verification:
-
-- `skills/nasqret-playbook.md`: build route slates before scaling compute.
-- `skills/deepseek-pressure-test.md`: ask an external worker to try to kill a
-  route before acting.
-- `skills/tony-rci-audit.md`: turn critique into concrete findings, smallest
-  useful fixes, and explicit gates.
-- `skills/bluesky-audit.md`: find the best bounded path if an idea is real
-  before deciding whether to invest.
-- `skills/redsky-audit.md`: try to kill a route with stale-truth, evidence,
-  validator, economics, and gate checks.
-- `scripts/storm-bluesky-redsky-loop-gate.py`: validate a five-loop
-  Bluesky/Redsky process packet with implemented findings and no compute/submit
-  overclaim.
-- `skills/agent-unstuck.md`: get a stuck agent moving again by diagnosing the
-  real failure, testing a different explanation, and verifying the result
-  across software, operations, research, writing, analysis, and business
-  development. The page is self-contained and can be given directly to an
-  agent by URL; no repository clone is required.
-- `skills/pip-discipline.md`: use the English/PIP-derived evidence discipline
-  for ECDSA-specific public coordination after repeated failure, passive
-  handoff, or unverified completion claims.
-- `skills/exact-support-miner.md`: turn public op-trace facts into ranked
-  value-exact skip packets with proof and validation gates.
-- `skills/frontier-lock.md`: refresh and record the current public frontier
-  before route, compute, note, or submit decisions.
-- `skills/validation-submit-gate.md`: keep evidence labels, trusted
-  validation, and submit-gate claims separate.
-- `skills/route-compute-gate.md`: require owner, predicate, validator, budget,
-  and stop condition before CPU/GPU dispatch.
-- `skills/multi-agent-handoff.md`: make cross-worker handoffs explicit with
-  ACKs, validators, and kill gates.
-- `skills/benchmark-frontier-archaeology.md`: walk adjacent public frontier
-  submissions to extract transferable levers, reject search artifacts, and name
-  the next binder.
-- `skills/circuit-diff-mining.md`: mine recent promoted diffs into bounded
-  candidate probes without stale knob copying.
-- `skills/circuit-optimization-intake.md`: turn route ideas into ranked,
-  source-bound packets with score estimates, falsifiers, and repair-before-hunt
-  gates.
-- `skills/peak-qubit-reduction.md`: inventory live-set binders, co-binder
-  plateaus, and qubit-Toffoli tradeoffs before structural width cuts.
-- `skills/toffoli-reduction.md`: classify emitted/executed Toffoli hot spots
-  and gate count-cut primitives before promoting a Toffoli route.
-- `skills/reversible-circuit-validation.md`: validate candidate routes across
-  classical, phase, and ancilla channels before clean or submit language.
-- `skills/island-hunting-bakeoff.md`: compare score-eligible routes with
-  equal-size pilot scans before committing large GPU ranges.
-- `skills/submission-forensics.md`: deep-audit public submissions, notes,
-  promoted diffs, and adjacent frontier moves without private-state leakage or
-  credit overclaiming.
-- `skills/bluesky-route-salvage.md`: find the smallest falsifiable experiment
-  that preserves upside before a route is killed.
-- `skills/redsky-frontier-audit.md`: run adversarial frontier, legality,
-  evidence-label, compute, and submit-gate checks.
-- `skills/ecdsafail-cli-ops.md`: operate the `ecdsafail` CLI with worktree,
-  credential, sync/reset, validation, and submit discipline.
-- `skills/stormgate-prefilter.md`: keep prefilter, canary, survivor-label, and
-  trusted-validation boundaries explicit.
-- `skills/q1152-structural-core.md`: gate lower-q structural routes on global
-  wall coverage, proof, score economics, count screens, and trusted eval.
-- `skills/construction-package-gate.md`: reject lower-q construction packages
-  that lack q-tier score edge, co-binder coverage, or clean validation status.
-- `skills/construction-intake-gate.md`: require paper-mined construction packets
-  to name a current source replacement, source/candidate hashes, q/T economics,
-  restore/phase/ancilla obligations, and a bounded toy falsifier before review.
-- `skills/anvil-mass-ledger-gate.md`: require conditional-Toffoli mass ledgers
-  to be machine-readable, source-bound, score-consistent, and routed to the
-  right next gate before workers promote rows.
-- `skills/anvil-namespace-gate.md`: require high-mass Anvil `op_index` rows to
-  declare the index namespace and source binding before exact-support proof
-  work.
-- `skills/anvil-exact-redundancy-gate.md`: require one high-mass Anvil op to
-  carry exact-support, restore, phase, ancilla, allocator, and score evidence
-  before review.
-- `skills/pebbling-theorem-gate.md`: require recompute/pebbling packets to name
-  the DAG node, producer/consumers, recompute path, score edge, and certified
-  restore/phase/ancilla/support proofs before route review.
-- `skills/frontier-escape-gate.md`: classify post-local-optimum packets as
-  source theorem, construction package, nonce retune, or NACK.
-- `skills/single-ccx-fanout-throughput.md`: apply and verify the d44
-  `SINGLE_CCX_FANOUT` no-clone throughput patch without promoting it into a
-  clean-route claim.
-- `skills/fanout-runpod-qstate-guard.md`: verify fanout GPU qstate headers and
-  hashes before spending pod time.
-- `skills/fanout-survivor-phase-gate.md`: gate fanout GPU survivors against
-  phase-aware official eval evidence before any win-language handoff.
-- `skills/official-fast-exit-eval.md`: apply and use the eval_circuit
-  `ISLAND_FAST_EXIT` dirty-triage patch without turning partial dirty counts
-  into score claims.
-- `skills/official-eval-isolation-gate.md`: require lock or isolated workdir
-  evidence before remote official eval output can become submit-grade evidence.
-- `skills/fleet-owner-claim-gate.md`: require owner, pod identity, route/range,
-  active watcher/log evidence, next action, and `no_submit_ack=yes` before a
-  paid instance survives audit.
-- `skills/local-heavy-compute-gate.md`: block Mac-local heavy ECDSA compute and
-  recurring watcher wrappers from laptop process snapshots, including
-  storm-exact-miner, route_compare, search_driver, lower-q, proof, and scanner
-  loops.
-- `skills/pod-inventory-ack-gate.md`: accept complete provider inventory ACKs,
-  hold unknown/unreachable inventory, accept verified zero-pod account inventory,
-  and fail ownerless running pods, nonzero empty-account spend, or compute start
-  language after fleet stop directives.
-- `skills/route-compare-admission-gate.md`: require clean baseline, clean
-  candidate, clean compare output, and a strict score edge before route-compare
-  evidence can become residual, compute, pod, handoff, submit, or alert work.
-- `skills/ffg-pair-proof-gate.md`: require pair-complete FFG call coverage,
-  certified value/restore/phase proof, source and candidate hashes, route
-  admission, sufficient shot depth, positive score edge, and no-submit
-  discipline before any FFG suffix-carry handoff or compute language.
-- `skills/compute-restart-gate.md`: block scanner restarts when compute is
-  closed, no route ACK exists, or no certified source/full-clean evidence exists.
-- `skills/compute-unlock-gate.md`: require a source-hash-bound certified
-  value-exact packet, exact diff, negative edge, allocator order, validation
-  owner, budget, stop condition, Storm route ACK, and no-submit ACK before
-  compute can reopen.
-- `skills/candidate-validation-packet-gate.md`: check remote validation packets
-  for host, owner, ops, score edge, c/p/a, artifacts, and no-submit discipline
-  before FOR-AKASH language.
-- `skills/source-packet-novelty-gate.md`: admit only source-bound, candidate
-  hash-bound, negative-edge packets outside the closed ledger; fail exhausted
-  source-family summaries before any proof or compute request.
-- `skills/source-row-routing-gate.md`: require each q1152 scout row to become
-  either one packet-ready bounded-proof row or one counterexample closure that
-  advances to the next source row, with no compute authority.
-- `skills/gidney-ccz-residual-gate.md`: screen Gidney erase-CCZ residual
-  packets so default-on remainder rows and below-bar mass do not unlock compute.
-- `skills/qoffset-host-accounting-gate.md`: require source-integrated qoffset
-  packets or closures to carry source/candidate hashes, proof status, restore
-  and phase flags, counted q1152 delta, and no-submit discipline.
-- `skills/emit-bundle-support-gate.md`: require combined real-emit bundles to
-  prove one shared invariant, clear the same-q shot-mass bar, and close cleanly
-  when witnesses differ or rows are live.
-- `skills/transcript-overlap-gate.md`: gate transcript peak-overlap drop
-  packets before implementation, blocking active-only origins, stale indexes,
-  dirty probes, missing peak calls, and premature residual/compute requests.
-- `skills/paper-gidney-constant-workspace-adder.md`: apply Gidney 2025
-  constant-workspace adders only after a toy proof and one-callsite residual
-  gate.
-- `skills/paper-mbu-modular-arithmetic.md`: turn measured-workspace arithmetic
-  cleanup into an explicit phase-correction proof obligation.
-- `skills/paper-hrs-dirty-constant-adder.md`: use HRS dirty-ancilla adders as a
-  disciplined borrowed-host route, not as zero scratch.
-- `skills/paper-gidney-temporary-logical-and.md`: evaluate temporary logical-AND
-  erase patterns for uncompute and Toffoli budgeting.
-- `skills/paper-haner-ecdlp-circuits.md`: compare point-add route ideas against
-  established ECDLP Q/T/depth tradeoffs.
-- `skills/paper-schrottenloher-point-addition.md`: map 2026 secp256k1
-  point-addition architecture ideas into local TLM invariants.
-- `skills/paper-schrottenloher-dialog-codec-audit.md`: test
-  Schrottenloher dialog-codec compression ideas against entropy bounds before
-  lower-Q transcript edits.
-- `skills/paper-luo-register-sharing-eea.md`: explore compact
-  register-sharing EEA ideas without hiding decompression peaks.
-- `skills/conditionally-clean-cascade-cut.md`: test the Nie-Zi-Sun /
-  Khattar-Gidney conditionally-clean cascade route for exact peak-carry cuts.
-- `skills/paper-conditionally-clean-ancillae.md`: use Khattar/Gidney
-  conditionally clean ancillae only with a branch-clean proof.
-- `skills/paper-reversible-pebbling-memory-management.md`: turn lower-Q
-  cleanup/recompute ideas into explicit peak DAG and stale-drop gates.
-- `skills/paper-square-active-volume.md`: rank reuse, uncompute, and codec
-  timing candidates by the above-target active-volume rows they actually cover.
-- `skills/paper-vandaele-optimal-comparator.md`: apply Vandaele 2026
-  comparator/incrementer circuits only after proving the comparator is the
-  peak source or pairing it with the co-peak carry floor.
-- `skills/paper-remaud-ancilla-free-adder.md`: evaluate no-ancilla adder
-  suffixes as lower-Q pressure relief with a strict Toffoli gate.
-- `skills/paper-takahashi-no-ancilla-adder.md`: use classic no-ancilla addition
-  as a suffix-only fallback baseline.
-- skills/paper-invariant-intake-gate.md: block paper-only scout hits and admit
-  only source-backed, candidate-hash-bound, certified local invariants to
-  skill-card review, without compute authority.
-- `skills/paper-roetteler-ecdlp-resource-estimate.md`: ground prime-field ECDLP
-  architecture ideas in gate-level point-add validation.
-- `skills/paper-garn-kan-windowed-binary-ecdlp.md`: borrow exact exceptional-case
-  and window/table discipline without direct field-porting.
-- `skills/paper-wire-recycling-lifetime-graph.md`: apply wire-recycling,
-  SQUARE, and Reqomp lifetime-graph discipline to free-pool aliasing and
-  stale-dead-drop failures.
-- `skills/paper-dirty-borrowing-entanglement.md`: require idle-source,
-  original-state, and external-entanglement identity proofs before borrowed
-  working qubits can support lower-Q cuts.
-- `skills/paper-scalable-memory-recycling.md`: prevent lower-Q primitive
-  swaps from silently changing dynamic headroom schedules; require schedule
-  ledgers, frozen baseline replay, and explicit rebaked tables.
-- `skills/paper-dead-gate-elimination.md`: regenerate and audit dead-drop
-  index files after op-stream edits; never reuse stale `.idx` proof artifacts.
-
-Codex-style agents can also discover the general Agent Unstuck card, the
-ECDSA-specific PIP card, and the audit cards through the repo-local bridges
-under `.agents/skills/`.
-
-## How To Call The Skills
-
-In Codex or another skill-aware agent, call a repo-local skill by name:
-
-```text
-Use frontier-lock.
-Use bluesky-route-salvage on this route.
-Use redsky-frontier-audit before compute.
-Use ecdsafail-cli-ops and validation-submit-gate before submit.
-```
-
-To use Agent Unstuck without cloning this repository, send the agent this URL:
-
-```text
-https://github.com/welttowelt/storm-ecdsa-harness/blob/main/skills/agent-unstuck.md
-```
-
-Then say: `Read the entire skill at this link and apply it to the current task.`
-
-The bridge names are:
-
-- `nasqret-playbook`
-- `deepseek-pressure-test`
-- `agent-unstuck`
-- `pip-discipline`
-- `tony-rci-audit`
-- `exact-support-miner`
-- `frontier-lock`
-- `validation-submit-gate`
-- `route-compute-gate`
-- `multi-agent-handoff`
-- `benchmark-frontier-archaeology`
-- `circuit-diff-mining`
-- `circuit-optimization-intake`
-- `peak-qubit-reduction`
-- `toffoli-reduction`
-- `reversible-circuit-validation`
-- `island-hunting-bakeoff`
-- `submission-forensics`
-- `bluesky-route-salvage`
-- `redsky-frontier-audit`
-- `ecdsafail-cli-ops`
-- `stormgate-prefilter`
-- `fanout-survivor-phase-gate`
-- `official-fast-exit-eval`
-- `official-eval-isolation-gate`
-- `fleet-owner-claim-gate`
-- `local-heavy-compute-gate`
-- `route-compare-admission-gate`
-- `compute-restart-gate`
-- `compute-unlock-gate`
-- `candidate-validation-packet-gate`
-- `qoffset-host-accounting-gate`
-- `emit-bundle-support-gate`
-- `construction-intake-gate`
-- `anvil-mass-ledger-gate`
-- `anvil-namespace-gate`
-- `anvil-exact-redundancy-gate`
-- `pebbling-theorem-gate`
-- `transcript-overlap-gate`
-- `paper-gidney-constant-workspace-adder`
-- `paper-mbu-modular-arithmetic`
-- `paper-hrs-dirty-constant-adder`
-- `paper-gidney-temporary-logical-and`
-- `paper-haner-ecdlp-circuits`
-- `paper-schrottenloher-point-addition`
-- `paper-schrottenloher-dialog-codec-audit`
-- `paper-luo-register-sharing-eea`
-- `conditionally-clean-cascade-cut`
-- `paper-conditionally-clean-ancillae`
-- `paper-reversible-pebbling-memory-management`
-- `paper-vandaele-optimal-comparator`
-- `paper-remaud-ancilla-free-adder`
-- `paper-takahashi-no-ancilla-adder`
-- `paper-roetteler-ecdlp-resource-estimate`
-- `paper-garn-kan-windowed-binary-ecdlp`
-- `paper-wire-recycling-lifetime-graph`
-- `paper-dirty-borrowing-entanglement`
-- `paper-scalable-memory-recycling`
-- `paper-dead-gate-elimination`
-
-Useful global skills for ECDSA work, when installed in the agent environment:
-
-- `redsky`: deep ECDSA.fail frontier-solving audit.
-- `ecdsafail-cli`: detailed CLI syntax for benchmark, run, submit, notes, sync,
-  reset, and skill install.
-
-Common call chains:
-
-- General company work after repeated failure or an unverified completion
-  claim: `agent-unstuck`; add `tony-rci-audit` when revising an existing
-  artifact.
-- Full route-intake stack: `frontier-lock` ->
-  `benchmark-frontier-archaeology` -> `circuit-optimization-intake` ->
-  `peak-qubit-reduction` / `toffoli-reduction` ->
-  `reversible-circuit-validation` -> `island-hunting-bakeoff` ->
-  `route-compute-gate` -> `validation-submit-gate`.
-- Exact skip mining: `frontier-lock` -> `exact-support-miner` ->
-  `redsky-frontier-audit` -> `validation-submit-gate`.
-- Frontier shift: `frontier-lock` -> `nasqret-playbook` ->
-  `benchmark-frontier-archaeology` -> `circuit-diff-mining`.
-- New route: `frontier-lock` -> `bluesky-route-salvage` ->
-  `redsky-frontier-audit` -> `route-compute-gate`.
-- External critique: `deepseek-pressure-test` -> `redsky-frontier-audit`.
-- Public submission audit: `frontier-lock` -> `submission-forensics` ->
-  `circuit-diff-mining`.
-- Prefilter/search work: `frontier-lock` -> `stormgate-prefilter` ->
-  `route-compute-gate` -> `validation-submit-gate`.
-- Submit attempt: `frontier-lock` -> `ecdsafail-cli-ops` ->
-  `validation-submit-gate`.
-- Worker handoff: `multi-agent-handoff` plus whichever route or validation card
-  owns the task.
-- Paper-driven lower-q adder work: `paper-gidney-constant-workspace-adder` ->
-  `paper-mbu-modular-arithmetic` -> `q1152-structural-core` ->
-  `construction-package-gate`.
-- Post-local-optimum route triage: `frontier-lock` ->
-  `frontier-escape-gate` -> `validation-submit-gate`.
-- Conditionally-clean cascade cut: `conditionally-clean-cascade-cut` ->
-  `paper-conditionally-clean-ancillae` -> `fold-carry-rearchitecture` ->
-  `exact-support-invariant-miner`.
-- Free-pool or stale-dead-drop integration failure:
-  `paper-wire-recycling-lifetime-graph` -> `redsky-frontier-audit` ->
-  `validation-submit-gate`.
-- Borrowed working-lane cut:
-  `paper-dirty-borrowing-entanglement` ->
-  `paper-wire-recycling-lifetime-graph` -> `paper-dead-gate-elimination`.
-- Schedule-coupled lower-Q primitive:
-  `paper-scalable-memory-recycling` -> `frontier-lock` ->
-  `structural-qubit-cut` -> `validation-submit-gate`.
-- Comparator peak pressure: `paper-vandaele-optimal-comparator` ->
-  `q1152-structural-core` -> `exact-support-invariant-miner`.
-- Peak host borrowing: `paper-conditionally-clean-ancillae` ->
-  `fold-carry-rearchitecture` -> `exact-support-invariant-miner`.
-- Zero-ancilla suffix fallback: `paper-remaud-ancilla-free-adder` ->
-  `paper-takahashi-no-ancilla-adder` -> `route-compute-gate`.
-- Paper-driven architecture work: `paper-haner-ecdlp-circuits` ->
-  `paper-schrottenloher-point-addition` ->
-  `paper-luo-register-sharing-eea` ->
-  `paper-roetteler-ecdlp-resource-estimate`, then reduce the idea to one local
-  invariant.
-
-## Quickstart
-
-Use this as a GitHub template or clone it directly:
+## Install
 
 ```bash
-git clone https://github.com/welttowelt/storm-ecdsa-harness.git
+git clone https://github.com/odinfree/storm-ecdsa-harness.git
 cd storm-ecdsa-harness
-scripts/redaction-check.sh
-scripts/redaction-check.sh --history
-scripts/check-public-harness.sh
-python3 -m http.server 8787 --directory dashboard
+./install.sh
 ```
 
-Then adapt the templates with fixture or public data only. Keep private hunt
-state in a separate private repo or local folder.
+`install.sh` links every skill into `~/.claude/skills` and `~/.codex/skills`, and into `~/.agents/skills` when that
+directory exists. It never replaces a skill you already have. To take a single skill, copy its folder into your
+agent's skills directory. On Windows, clone with `git -c core.symlinks=true` so `skills/agent-unstuck` resolves.
 
-Full guide: [docs/quickstart.md](docs/quickstart.md).
+`agent-unstuck` also works without installing anything. Give your agent this URL:
+`https://raw.githubusercontent.com/odinfree/storm-ecdsa-harness/main/skills/agent-unstuck.md`
 
-Safe filled examples: [examples/](examples/).
+## Skills
 
-Audit loop: [docs/audit-loop.md](docs/audit-loop.md).
+### Working with agents
 
-Prefilter gate pattern: [docs/stormgate.md](docs/stormgate.md).
+| Skill | What it does | Built on |
+|---|---|---|
+| [agent-unstuck](skills/agent-unstuck.md) | Gets a stuck agent moving: diagnose the failure, test another explanation, verify before claiming success | tanweai/pua |
+| [pip-discipline](skills/pip-discipline/SKILL.md) | Recovers a stalled ecdsa.fail lane with evidence instead of another parameter tweak | tanweai/pua |
+| [mission-command](skills/mission-command/SKILL.md) | Runs one bounded mission with stated authority, one owner and a falsifiable closeout | Original |
+| [hard-problem-contract](skills/hard-problem-contract/SKILL.md) | Frames a hard, decidable problem so the agent cannot settle for a partial answer | OpenAI's Cycle Double Cover prompt, ShouqiaoW/erdos |
+| [deepseek-pressure-test](skills/deepseek-pressure-test/SKILL.md) | Has an outside model try to kill a route before you spend compute on it | Original (Storm harness) |
+| [cross-model-review-gate](skills/cross-model-review-gate/SKILL.md) | Gets a second lab's model to review the work, recorded against the exact commit | gnuchev's Open Research Club |
+| [send-to-claude-fable](skills/send-to-claude-fable/SKILL.md) | Hands a bounded task to Claude Fable and brings back its verdict | Original |
+| [jev-second-perspective](skills/jev-second-perspective/SKILL.md) | Uses TypeSafe's Jev to rank levers or check claims against a lab log | TypeSafe |
 
-Latest stormgate Redsky audit:
-[docs/redsky-stormgate-audit-2026-06-20.md](docs/redsky-stormgate-audit-2026-06-20.md).
+### Research and measurement
 
-## What This Repo Does Not Contain
+| Skill | What it does | Built on |
+|---|---|---|
+| [research-loop](skills/research-loop/SKILL.md) | Runs a queue of research questions that refills itself, with parallel researcher agents | BitWonka's loop-engine (MIT) |
+| [elicit-research](skills/elicit-research/SKILL.md) | Searches papers and runs systematic reviews through the Elicit API | Elicit |
+| [verify-research-transfer](skills/verify-research-transfer/SKILL.md) | Checks that a paper supports an optimization before anyone builds it | Original |
+| [verify-paired-native-measurements](skills/verify-paired-native-measurements/SKILL.md) | Audits paired benchmark evidence before a result is admitted | Original |
+| [portable-source-assertions](skills/portable-source-assertions/SKILL.md) | Keeps Python AST source checks stable across interpreter versions | Original |
+| [rust-archive-build-binding](skills/rust-archive-build-binding/SKILL.md) | Stops stale Cargo artifacts from contaminating benchmark comparisons | Original |
 
-- Live `ecdsafail-hunt-ops` state.
-- Private mailbox history.
-- Real run logs, pod endpoints, keys, tokens, or account details.
-- Unreleased candidate diffs or winning nonces.
-- Active strategy notes from an ongoing hunt.
+### ecdsa.fail circuits
 
-## Operating Model
+| Skill | What it does | Built on |
+|---|---|---|
+| [ecdsafail-oracle-loop](skills/ecdsafail-oracle-loop/SKILL.md) | Iterates until the official evaluator says better, with a route journal that survives compaction | tanweai/pua (loop discipline) |
+| [ecdsafail-fasteval](skills/ecdsafail-fasteval/SKILL.md) | Scores an `ops.bin` exactly like `eval_circuit`, in minutes, at about 20 bytes per op instead of 56 | BitWonka's fasteval |
+| [ecdsafail-lowq-playbook](skills/ecdsafail-lowq-playbook/SKILL.md) | Takes qubits off a low-Q stream: census, cut, refactor, then budget lambda | BitWonka's 26 public notes |
+| [ecdsafail-pareto-ratchet](skills/ecdsafail-pareto-ratchet/SKILL.md) | Holds Pareto rows with exact cuts and one-dial band sweeps | gnuchev's 167 public notes |
+| [ecdsafail-scratch-diet](skills/ecdsafail-scratch-diet/SKILL.md) | Replaces clean scratch at the binding instant with borrowed, literal or re-encoded forms | gnuchev's October notes, our public rows |
+| [beachhead-ratchet](skills/beachhead-ratchet/SKILL.md) | Takes a left move that costs Toffoli, then wins the cost back on your own tree | bulengerk's public notes |
+| [invariant-chart](skills/invariant-chart/SKILL.md) | Drops register bits that an algebraic relation already determines | bulengerk's public notes |
+| [shot-autopsy](skills/shot-autopsy/SKILL.md) | Turns a candidate-only failing shot into a named defect and a permanent regression | bulengerk's public notes |
+| [circuit-edit-integration-safety](skills/circuit-edit-integration-safety/SKILL.md) | Finds why a primitive that is clean on its own dirties the full circuit | Original (Storm harness) |
+| [route-compare-probe-discipline](skills/route-compare-probe-discipline/SKILL.md) | Compares baseline and candidate on the same shots before blaming one call | Original (Storm harness) |
+| [nasqret-playbook](skills/nasqret-playbook/SKILL.md) | Rebuilds the route slate when a frontier move changes the search | nasqret's sweeps |
 
-Every cycle starts from public truth, not memory:
+### Proofs and exact math
 
-1. Refresh the live benchmark/current target.
-2. Read mailbox entries and ACK directed handoffs.
-3. Check route packets and evidence labels.
-4. Run cheap validation before paid compute.
-5. Dispatch compute only when a route has a predicate, owner, validator, kill
-   gate, and bounded stop condition.
-6. Treat scanner hits as `Prefilter` until official local validation passes.
-7. Submit only after fresh frontier recheck, official local `0/0/0`, score win,
-   legal narrow diff, public note, and explicit submit flag.
+| Skill | What it does | Built on |
+|---|---|---|
+| [proximity-prize-campaign](skills/proximity-prize-campaign/SKILL.md) | Runs a Proximity Prize proof lane against the live frontier, with digests of the public record | BitWonka's 31 notes, the Discussion #537 authors |
+| [proximity-prize-frontier-archaeology](skills/proximity-prize-frontier-archaeology/SKILL.md) | Compares each accepted proof only with its accepted predecessor | Original |
+| [accepted-proof-exact-retune](skills/accepted-proof-exact-retune/SKILL.md) | Finds the smallest strict score step an accepted proof allows | Original |
+| [lean-arklib-proofs](skills/lean-arklib-proofs/SKILL.md) | Formalizes claims in Lean 4 with ArkLib and gates them on a clean build and axiom audit | ArkLib, Mathlib |
+| [fast-lean-proof-loop](skills/fast-lean-proof-loop/SKILL.md) | Speeds up Lean proof iteration without weakening the final gate | Original |
+| [lean-finite-certificate-splitting](skills/lean-finite-certificate-splitting/SKILL.md) | Cuts kernel memory on large finite certificates | Original |
+| [computer-algebra-oracles](skills/computer-algebra-oracles/SKILL.md) | Routes exact algebra questions to the right computer algebra system, with replayable output | Original |
+| [constraint-construction-search](skills/constraint-construction-search/SKILL.md) | Encodes finite searches for SAT, SMT, CP-SAT or MIP and audits the result | Original |
+| [exact-search-engineering](skills/exact-search-engineering/SKILL.md) | Builds exact searches in FLINT, Nemo, Julia, C++ or Rust | Original |
 
-More detail: [docs/operating-model.md](docs/operating-model.md).
+### Kaggle
 
-## Dashboard
+| Skill | What it does | Built on |
+|---|---|---|
+| [squares-in-squares-campaign](skills/squares-in-squares-campaign/SKILL.md) | Packs unit squares into the smallest square: metric gates, tools, frontier structure, dead routes | Erich Friedman's packing records and the Kaggle community |
 
-The dashboard in `dashboard/` is static and fixture-only. It shows how to
-surface current target, worker status, mailbox activity, breaking news, fleet
-state, and submit gates without leaking operational details.
+## Literature notes
 
-Public fixture dashboard:
+[notes/papers](notes/papers/README.md) holds 24 short notes on the work behind these circuits: 22 papers, from Proos and Zalka
+(2003) to the 2026 ECDSA.Fail paper, plus the October 2026 PR lineage and the public toolchains. Each note gives the
+citation, the key result and the trick worth knowing.
 
-```text
-https://welttowelt.github.io/storm-ecdsa-harness/
-```
+## What is not here
 
-Open locally:
+Our own unpublished plans for boards that are still running stay private: ecdsa.fail, provably.fast, the Proximity
+Prize and the QCC Kaggle competition. The skills here that touch live boards describe public records only. Kaggle's
+rules forbid sharing competition code outside the team while a competition runs.
 
-```bash
-python3 -m http.server 8787 --directory dashboard
-```
+The first Storm harness (route packets, gate scripts, the Zellij control plane, June to July 2026) is still in the
+git history at commit [`dd6a173`](https://github.com/odinfree/storm-ecdsa-harness/tree/dd6a173).
 
-Then open the local server URL printed by your terminal.
+## Thank you
 
-## Redaction Check
+These skills exist because people did their work in the open.
 
-Run this before publishing or pushing:
+- **BitWonka** wrote fasteval and dead-ccx-finder, the loop-engine harness behind research-loop, and 57 detailed
+  public notes on ecdsa.fail and the Proximity Prize.
+- **gnuchev (Vasily Gnuchev)** published 167 ecdsa.fail notes that taught us the Pareto ratchet and the scratch diet,
+  and showed in the Open Research Club how two models from different labs can review each other.
+- **bulengerk** made the left moves behind beachhead-ratchet, invariant-chart and shot-autopsy, and explained each
+  one in the notes.
+- **Jieyi Long** and co-authors wrote the ECDSA.Fail paper and its supplemental materials. Jieyi Long also published
+  the ecdsafail_skills suite and the GPU island toolkit.
+- **nasqret (Bartosz Naskręcki)** showed what broad qubit sweeps and mechanism recombination can do.
+- **Teddy Pender** posted the August 2026 row that opened the ping-pong family, and co-wrote the record-and-replay paper.
+- **jackylee0424, mochimodev, krishparadox, dysnasia, kaankolcu, MonitSharma, edi3on, SnehalRaj, gopikannappan** and
+  every other ecdsa.fail solver whose public rows and notes the digests cite.
+- **dtumad, hybridnoise, yoyo930021, GordoAR, CrystallineButterfly, lamb356 and raresbuhai**, who worked through the
+  116.13 upper-track wall with BitWonka and Jieyi Long in Proximity Prize Discussion #537, and **0xLucqs, zkfriendly**
+  and the other Proximity Prize solvers whose public submissions the digests cite.
+- **The ecdsa.fail team** at Layr-Labs, with Gautham Anant, built the open benchmark from the code and data Google
+  Quantum AI published with its 2026 paper. **Yukon and zkSecurity** run the Proximity Prize. **Kaggle** ran Squares in Squares.
+- **tanweai and the PUA contributors** for the evidence discipline in agent-unstuck, pip-discipline and the oracle loop.
+- **TypeSafe** (Jev), **Elicit**, **Trail of Bits** (TrailMix), **kepano** (defuddle), and the authors of every paper
+  cited in the notes and digests.
+- **Gajesh Naik, newjordan (Frosty40), Sam (karnot.xyz), zuiris (Maksim) and Justin Drake**, whose ideas shaped the
+  first Storm harness.
 
-```bash
-scripts/redaction-check.sh
-```
+Oli Freuler ([odinfree](https://github.com/odinfree)) wrote these skills with Claude and Codex; [CREDITS.md](CREDITS.md)
+has sources, licences and how each skill was reviewed. If a credit is missing or wrong, please
+[open a credit correction](https://github.com/odinfree/storm-ecdsa-harness/issues/new?template=credit-correction.md).
 
-The check rejects common private material: API-key shapes, remote command
-fragments, host/port patterns, private paths, raw nonce assignments, live
-mailbox filenames, and forbidden state directories.
+## License
 
-Before a public push, also scan committed history:
-
-```bash
-scripts/redaction-check.sh --history
-```
-
-The GitHub Actions workflow runs both checks on push and pull request.
-
-## Release Rule
-
-Do not publish until:
-
-- `scripts/redaction-check.sh` passes.
-- `scripts/redaction-check.sh --history` passes.
-- `docs/credits.md` names every borrowed idea or tool.
-- All examples use fixture/demo data.
-- A human review confirms no private hunt state remains.
-
-See [docs/publish-checklist.md](docs/publish-checklist.md) for the full
-publish sequence and [docs/telegram-announcement.md](docs/telegram-announcement.md)
-for a short sharing draft.
+MIT for our own text and code (see [LICENSE](LICENSE)). `skills/research-loop` keeps BitWonka's MIT licence.
+Everything we learned from someone else is credited in [CREDITS.md](CREDITS.md). Apart from research-loop's MIT
+templates, no third-party code is bundled.

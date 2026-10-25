@@ -1,0 +1,6 @@
+interface:
+  display_name: "ecdsa.fail low-Q playbook"
+  short_description: "BitWonka's census -> cut -> lambda/nonce loop for low-qubit Pareto points"
+  default_prompt: "Use $ecdsafail-lowq-playbook to plan the next qubit cut on this low-Q stream."
+policy:
+  allow_implicit_invocation: true

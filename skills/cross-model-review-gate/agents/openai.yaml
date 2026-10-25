@@ -1,0 +1,5 @@
+interface:
+  display_name: "Cross-Model Review Gate"
+  short_description: "Second-lab model review recorded against the exact commit"
+policy:
+  allow_implicit_invocation: true

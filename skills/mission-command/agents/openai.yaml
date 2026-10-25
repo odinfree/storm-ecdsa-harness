@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mission Command"
+  short_description: "Run bounded evidence-led technical missions"
+  default_prompt: "Use $mission-command to frame and execute one bounded evidence-backed mission with clear decision rights and an ADMIT or HARD_NACK closeout."

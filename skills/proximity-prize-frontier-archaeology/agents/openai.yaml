@@ -1,0 +1,7 @@
+interface:
+  display_name: "Proximity Prize Frontier Archaeology"
+  short_description: "Diff each accepted proof against its direct predecessor"
+  default_prompt: "Use $proximity-prize-frontier-archaeology to source-bind this accepted frontier move and isolate its transferable lever."
+policy:
+  allow_implicit_invocation: true
+

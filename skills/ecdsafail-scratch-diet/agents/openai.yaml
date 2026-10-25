@@ -1,0 +1,5 @@
+interface:
+  display_name: "ecdsa.fail scratch diet"
+  short_description: "Exact qubit cuts at the binding instant of a low-Q tree"
+policy:
+  allow_implicit_invocation: true

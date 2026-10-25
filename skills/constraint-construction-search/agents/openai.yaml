@@ -1,0 +1,6 @@
+interface:
+  display_name: "Constraint Construction Search"
+  short_description: "Encode and verify SAT, SMT, CP-SAT, or MIP searches"
+  default_prompt: "Use $constraint-construction-search to encode and independently verify this construction problem."
+policy:
+  allow_implicit_invocation: true

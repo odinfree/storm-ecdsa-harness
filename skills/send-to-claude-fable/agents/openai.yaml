@@ -1,0 +1,4 @@
+interface:
+  display_name: "Send to Claude Fable"
+  short_description: "Dispatch a bounded review through the local Claude Fable CLI"
+  default_prompt: "Send this bounded task to Claude Fable and return its verdict."

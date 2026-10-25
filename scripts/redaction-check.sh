@@ -30,6 +30,7 @@ scan_files() {
     -path './.git' -prune -o \
     -path './.github/workflows/redaction.yml' -prune -o \
     -path './scripts/redaction-check.sh' -prune -o \
+    -path './.redaction-extra' -prune -o \
     -type f -print
 }
 
@@ -79,7 +80,21 @@ check_pattern "private_linux_home_path" '(/home/[A-Za-z0-9._-]+|/root(/|$))'
 check_pattern "private_windows_home_path" '[A-Za-z]:\\Users\\[A-Za-z0-9._-]+'
 check_pattern "live_mailbox_name" 'ECDSA_FAIL_AGENT_HANDOFF'
 check_pattern "raw_nonce_assignment" '(^|[^[:alpha:]])(nonce|TAIL_NONCE|DIALOG_TAIL_NONCE)[_A-Za-z0-9-]*[=:][[:space:]]*[0-9]{4,}'
+check_pattern "private_repo_name" '([A-Za-z0-9_-]+-private([^A-Za-z0-9_-]|$)|skill-collections/|super-collection)'
+check_pattern "private_chat_source" '(TG-BRIEF|TG brief|Telegram brief|group-chat transcript)'
+check_pattern "authority_or_spend" '(standing grant|standing OK|USD ?[0-9]{2,}|[0-9]+ ?USD/24|autosubmit authority|submit authority for #1)'
+check_pattern "tailnet_ip" '100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\.[0-9]{1,3}\.[0-9]{1,3}'
+check_pattern "coordination_mailbox" '(coord-post|coord\.md|events\.jsonl|Boss nudges)'
 check_pattern "raw_hex_nonce_assignment" '(^|[^[:alpha:]])(nonce|TAIL_NONCE|DIALOG_TAIL_NONCE)[_A-Za-z0-9-]*[=:][[:space:]]*0x[0-9A-Fa-f]{8,}'
+
+# Optional local-only patterns (one ERE per line), never committed: .redaction-extra
+if [ -f .redaction-extra ]; then
+  n=0
+  while IFS= read -r pat; do
+    [ -z "$pat" ] && continue
+    n=$((n+1)); check_pattern "local_extra_$n" "$pat"
+  done < .redaction-extra
+fi
 
 if [ "$fail" -ne 0 ]; then
   exit 1

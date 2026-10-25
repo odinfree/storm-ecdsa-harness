@@ -1,0 +1,6 @@
+interface:
+  display_name: "Computer Algebra Oracles"
+  short_description: "Route exact algebra through suitable CAS tools"
+  default_prompt: "Use $computer-algebra-oracles to choose and verify an exact computer-algebra route."
+policy:
+  allow_implicit_invocation: true

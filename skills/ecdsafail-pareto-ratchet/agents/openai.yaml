@@ -1,0 +1,5 @@
+interface:
+  display_name: "ecdsa.fail Pareto ratchet"
+  short_description: "Hold Pareto rows with exact cuts and one-dial band sweeps"
+policy:
+  allow_implicit_invocation: true

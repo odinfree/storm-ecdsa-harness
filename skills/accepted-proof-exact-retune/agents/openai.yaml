@@ -1,0 +1,7 @@
+interface:
+  display_name: "Accepted Proof Exact Retune"
+  short_description: "Find the smallest strict score step an accepted proof allows"
+  default_prompt: "Use $accepted-proof-exact-retune to bind the accepted proof model and search its smallest exact strict score step."
+policy:
+  allow_implicit_invocation: true
+

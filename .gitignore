@@ -23,3 +23,5 @@ build/
 .venv/
 __pycache__/
 
+skills/elicit-research/references/api-schema.json
+.redaction-extra

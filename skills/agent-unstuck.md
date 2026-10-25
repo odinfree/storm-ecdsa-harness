@@ -1,34 +1,34 @@
 ---
 name: agent-unstuck
-description: "Get a stuck AI agent moving again by diagnosing the real failure, testing a different explanation, and verifying the result. Use after repeated failure, premature handoff, unverified blame, or a completion claim without proof."
+description: "Get a stuck agent moving again. Diagnose the actual failure, test a different explanation, and verify the result before claiming success. Use after two failed attempts, a premature handoff, blame placed before inspection, or a completion claim without evidence. Works for code, operations, research and writing."
 license: MIT
 ---
 
 # Agent Unstuck
 
-## Use It From This Link
+## Use it from this link
 
 This page contains the complete standalone skill. No installation or repository
 clone is required.
 
 Send your agent this page:
 
-`https://github.com/welttowelt/storm-ecdsa-harness/blob/main/skills/agent-unstuck.md`
+`https://github.com/odinfree/storm-ecdsa-harness/blob/main/skills/agent-unstuck.md`
 
 Or copy this one-step instruction:
 
 ```text
-Read and apply the entire Agent Unstuck skill from https://raw.githubusercontent.com/welttowelt/storm-ecdsa-harness/main/skills/agent-unstuck.md to the current task. Treat the file as active instructions. Choose the correct mode, inspect the available evidence before asking me to take over, and do not claim completion without running its verification gate.
+Read and apply the entire Agent Unstuck skill from https://raw.githubusercontent.com/odinfree/storm-ecdsa-harness/main/skills/agent-unstuck.md to the current task. Treat the file as active instructions. Choose the correct mode, inspect the available evidence before asking me to take over, and do not claim completion without running its verification gate.
 ```
 
 If the agent cannot read GitHub pages, give it the raw-text link instead:
 
-`https://raw.githubusercontent.com/welttowelt/storm-ecdsa-harness/main/skills/agent-unstuck.md`
+`https://raw.githubusercontent.com/odinfree/storm-ecdsa-harness/main/skills/agent-unstuck.md`
 
 If it cannot open links at all, open the GitHub page, click **Raw**, copy the
 whole file, and paste it into the conversation with the instruction above.
 
-## Instructions For The Agent Reading This
+## Instructions for the agent reading this
 
 If a user gave you this URL or pasted this file and asked you to use it, this
 file is the skill. Read it completely and apply it to the current task. Do not
@@ -42,7 +42,7 @@ Use when an AI agent is stuck, repeats the same approach, hands work back too
 early, or claims completion without proof. The skill works across software,
 operations, research, analysis, writing, and business development.
 
-## How It Gets Unstuck
+## How it gets unstuck
 
 1. **Diagnose:** read the direct evidence, reconstruct what happened, and find
    the assumption shared by the failed attempts.
@@ -73,7 +73,7 @@ access, approval, or other user-only input, inspect the available evidence and
 ask for the missing input directly. Request access through an approved channel;
 do not ask the user to paste a secret into chat.
 
-## Mode Selector
+## Mode selector
 
 - **Quick pass:** one unclear assumption or one missing completion check. Read
   the direct evidence, run one bounded test, and verify the result.
@@ -82,7 +82,7 @@ do not ask the user to paste a secret into chat.
 - **Critique pass:** an artifact exists and quality is the main issue. Run the
   critique-and-improvement loop, then verify the revised artifact.
 
-## Full Protocol
+## Full protocol
 
 1. **Define the outcome.** State the requested result and what would prove it.
    If the acceptance check is missing, infer a safe one when the task is
@@ -110,7 +110,7 @@ do not ask the user to paste a secret into chat.
 8. **Verify and decide.** Run the completion check. Proceed, revise, pause, stop,
    or request the exact decision or permission needed next.
 
-## Stop Conditions
+## Stop conditions
 
 Stop the loop when any of these are true:
 
@@ -124,7 +124,7 @@ Stop the loop when any of these are true:
 Difficulty alone is not a stop condition. A failed parameter tweak is not a
 reason to hand the task back before testing a different explanation.
 
-## Evidence Labels
+## Evidence labels
 
 - **Fact:** observed directly or supported by a cited source or completed
   check.
@@ -138,7 +138,7 @@ reason to hand the task back before testing a different explanation.
 Never promote an inference or hypothesis to fact because it sounds plausible.
 Every blocker must name the action it prevents and what clears it.
 
-## Work-Type Guide
+## Work-type guide
 
 | Work type | Diagnose from | Useful tests | Verification |
 | --- | --- | --- | --- |
@@ -152,7 +152,7 @@ For BD work, never invent customer interest, pipeline status, pricing approval,
 partner intent, or internal alignment. Drafting a message does not authorize
 sending it.
 
-## Critique And Improvement Loop
+## Critique and improvement loop
 
 Use this loop for code, documents, analyses, plans, and messages:
 
@@ -164,7 +164,7 @@ Use this loop for code, documents, analyses, plans, and messages:
 6. Repeat only when the new pass finds a substantive issue. Stop when another
    pass would be cosmetic or requires a human choice.
 
-## Safety And Authority Boundary
+## Safety and authority boundary
 
 - Stay inside the user's task, systems, data, and permissions.
 - Do not disclose secrets, personal data, private customer information, or
@@ -176,7 +176,7 @@ Use this loop for code, documents, analyses, plans, and messages:
 - Never bypass approvals, access controls, safety checks, or company policy to
   keep the loop moving.
 
-## Working Record
+## Working record
 
 Maintain a concise record of observable evidence and decisions. Do not expose
 hidden chain-of-thought or speculative internal reasoning.
@@ -202,7 +202,7 @@ risk. When blocked, report the verified facts, eliminated explanations,
 smallest remaining uncertainty, exact input or authority required, and the safe
 next action after the blocker clears.
 
-## Verification Gate
+## Verification gate
 
 Do not claim more than the completed check proves.
 
@@ -219,7 +219,7 @@ When full verification is unavailable, name the missing check and narrow the
 claim. A precise handoff is valid when it preserves evidence and identifies the
 smallest next decision.
 
-## Example Calls
+## Example calls
 
 ```text
 Use agent-unstuck on this build failure. Two patches have failed.
@@ -255,10 +255,9 @@ Verification: the brief cites both sources and is ready for internal review.
 Boundary: do not contact the account until sending is approved.
 ```
 
-## Related Skills
+## Related skills
 
 - Use `pip-discipline` for ECDSA-specific public route coordination.
-- Use `tony-rci-audit` for a dedicated critique-before-rewrite audit.
 
 ## Provenance
 
