@@ -6,7 +6,9 @@ This repository is the public home of the Storm skill collection: agent skills f
 
 - Skill format: YAML frontmatter (`name`, `description`, `whenToUse`) plus a Markdown body. Prefer the directory form (`skills/<name>/SKILL.md`); supporting files live beside the SKILL.md.
 - Attribution: when a skill builds on someone's public work, its README table row and `CREDITS.md` entry must name the source and licence. Never remove an attribution line.
-- `install.sh` symlinks every skill into `~/.claude/skills`, `~/.codex/skills`, and `~/.agents/skills` when present. It must stay idempotent and never replace an existing skill.
+- `install.sh` symlinks every skill into `~/.claude/skills` and `~/.codex/skills`, plus `~/.agents/skills` and
+  `${HERMES_HOME:-$HOME/.hermes}/skills` when those directories exist. It must stay idempotent and never replace
+  an existing skill.
 - Skills are prompt configuration that agents execute. Treat pull requests like code: review the instructions a skill adds, not just its prose.
 
 ## Working rules for agents

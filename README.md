@@ -17,9 +17,19 @@ cd storm-ecdsa-harness
 ./install.sh
 ```
 
-`install.sh` links every skill into `~/.claude/skills` and `~/.codex/skills`, and into `~/.agents/skills` when that
-directory exists. It never replaces a skill you already have. To take a single skill, copy its folder into your
-agent's skills directory. On Windows, clone with `git -c core.symlinks=true` so `skills/agent-unstuck` resolves.
+`install.sh` links every skill into `~/.claude/skills` and `~/.codex/skills`. It also links into
+`~/.agents/skills` and the active Hermes profile's `skills` directory when those directories exist. It never
+replaces a skill you already have.
+
+Hermes uses `HERMES_HOME` to select a profile. The ordinary default profile needs no extra command. To install
+into a named profile, run:
+
+```bash
+HERMES_HOME="$HOME/.hermes/profiles/research" ./install.sh
+```
+
+To take a single skill, copy its folder into your agent's skills directory. On Windows, clone with
+`git -c core.symlinks=true` so `skills/agent-unstuck` resolves.
 
 `agent-unstuck` also works without installing anything. Give your agent this URL:
 `https://raw.githubusercontent.com/odinfree/storm-ecdsa-harness/main/skills/agent-unstuck.md`
