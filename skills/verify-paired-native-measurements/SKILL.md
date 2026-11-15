@@ -3,7 +3,7 @@ name: verify-paired-native-measurements
 description: "Audit the process, sample and archive evidence behind paired native benchmarks, especially wrappers around an unchanged official client. Use before admitting benchmark results or when reviewing the controller that produced them. Ordinary unit tests do not need this."
 ---
 
-# Verify paired native measurements
+# Zwillingswaag (verify-paired-native-measurements)
 
 Bind the conclusion to the declared experiment, exact native artifacts and actual retained evidence. Local comparisons do not establish an official score or promotion. This skill adds no execution, provider, spending or submission authority. Use the existing mission and its canonical Mission Command policy when applicable.
 

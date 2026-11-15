@@ -4,7 +4,7 @@ description: "Run a self-expanding research loop. Each cycle sends parallel rese
 license: MIT (adapted from BitWonka/loop-engine; see LICENSE)
 ---
 
-# Research loop
+# Hamsterrädli (research-loop)
 
 Usage: `research-loop <new|cycle|run|status> [loop-name] [seed...]` (Claude Code:
 `/research-loop ...`; Codex: `$research-loop ...`). With no op, run `status`.

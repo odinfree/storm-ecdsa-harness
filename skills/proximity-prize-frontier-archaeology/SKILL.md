@@ -3,7 +3,7 @@ name: proximity-prize-frontier-archaeology
 description: "Compare each newly accepted Proximity Prize proof with its accepted predecessor only. Bind the source and the public note, inspect proof-root and module changes, and isolate the lever that transfers, without contaminating clean-room lanes."
 ---
 
-# Proximity Prize frontier archaeology
+# Scherbehuufe (proximity-prize-frontier-archaeology)
 
 Use this skill after an accepted better.codes frontier move or when comparing a competitor's promoted proof with its immediate accepted predecessor. This is incumbent-history research. Never place its source, receipts, conclusions, route hints, or terminology in a clean-room re-descent packet.
 

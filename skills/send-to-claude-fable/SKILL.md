@@ -3,7 +3,7 @@ name: send-to-claude-fable
 description: "Send a bounded task or review packet to the local Claude Code CLI on the Fable model and bring back its verdict. Use when you want an independent second opinion from a different model."
 ---
 
-# Send to Claude Fable
+# Märlitante (send-to-claude-fable)
 
 Use this skill when the user explicitly asks to send, delegate, or obtain a review from Claude Fable through the local `claude` CLI.
 

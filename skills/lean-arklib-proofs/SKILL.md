@@ -3,7 +3,9 @@ name: lean-arklib-proofs
 description: "Formalize and verify mathematical or cryptographic claims in Lean 4 with ArkLib: exact-target builds, axiom audits, dependency checks, and the build evidence an evaluator expects."
 ---
 
-# Lean and ArkLib proofs
+# Magerquark (lean-arklib-proofs)
+
+*Lean and ArkLib proofs*
 
 Convert an informal argument or computational finding into a theorem accepted by the target Lean 4 and ArkLib project. The exact repository target and its policy define acceptance.
 

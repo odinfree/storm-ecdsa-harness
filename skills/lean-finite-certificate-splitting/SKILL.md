@@ -3,7 +3,9 @@ name: lean-finite-certificate-splitting
 description: "Reduce Lean kernel replay memory for finite literal matrix certificates by splitting ordinary decide goals and assembling them symbolically. Use after a measured memory failure; it does not replace mathematical validation."
 ---
 
-# Split finite kernel certificates
+# Schiitlispalter (lean-finite-certificate-splitting)
+
+*Split finite kernel certificates*
 
 Preserve the statement and exact literal data while changing proof granularity. A resource failure rejects an execution shape under its bound, not the mathematical identity.
 

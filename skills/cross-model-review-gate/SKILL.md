@@ -3,7 +3,7 @@ name: cross-model-review-gate
 description: "Two-model review before an irreversible step. A reviewer from a second lab checks the work, and every review is recorded against the exact commit and artifact hash. Learned from gnuchev's Open Research Club (a Claude author, an OpenAI reviewer, about three rounds per artifact). Use before submitting a structural benchmark row, publishing a tool or skill, declaring a route dead, or deploying."
 ---
 
-# Cross-model review gate
+# Gägeläser (cross-model-review-gate)
 
 A **receipt** is one reviewer's record of exactly what it checked about one exact revision. It reports checks; it does
 not certify the claim. The gate: the irreversible step waits for a `no_concerns` receipt on the current revision **and**

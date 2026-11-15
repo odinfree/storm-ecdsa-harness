@@ -3,7 +3,7 @@ name: proximity-prize-campaign
 description: "Run a Proximity Prize (better.codes) proof lane. Read the live frontier and your campaign ledger, route the math to the exact-algebra, search and Lean skills, check dead routes, and gate every promotion on Lean and ArkLib. Includes digests of BitWonka's 31 public submission notes and of the Discussion #537 thread on the 116.13 upper-track wall."
 ---
 
-# Proximity Prize campaign
+# Nöchberli (proximity-prize-campaign)
 
 Use this thin overlay only for better.codes or Proximity Prize work. Mathematical tooling comes from the reusable exact-algebra, exact-search, constraint-search, and Lean/ArkLib skills.
 

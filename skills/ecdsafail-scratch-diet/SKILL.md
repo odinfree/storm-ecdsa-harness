@@ -3,7 +3,7 @@ name: ecdsafail-scratch-diet
 description: "Exact qubit cuts for low-Q ecdsa.fail trees. Run a known-bit census, then replace every clean-scratch use at the binding instant with a borrowed lane, a literal or a re-encoding, or move a register into another register's provable gap. Built from gnuchev's October cuts and our own public 793-to-791 and 815-to-811 rows. Use when the next qubit must come off, or when a stage panics with 'scratch pool exhausted'."
 ---
 
-# ecdsa.fail scratch diet
+# Hungerkur (ecdsafail-scratch-diet)
 
 Every one of these cuts is **exact** (same function, lambda unchanged) and costs Toffoli; on the Pareto board that is the
 right trade whenever the next point to the left sits far higher in T. Evidence: gnuchev's notes, digested with cites in

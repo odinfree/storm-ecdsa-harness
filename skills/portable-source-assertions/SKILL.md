@@ -3,7 +3,7 @@ name: portable-source-assertions
 description: "Fix Python AST source-identity assertions that break across interpreter versions while keeping the exact semantic check. Keeps a source review separate from an actual fixture run."
 ---
 
-# Portable source assertions
+# Zügelchischte (portable-source-assertions)
 
 Use when unchanged Python controller source passes AST-hash checks locally but fails them on another pinned interpreter. Keep the repair limited to the demonstrated representation difference; this skill does not authorize a rerun, deployment or native workload.
 

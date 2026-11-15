@@ -4,7 +4,9 @@ description: "Build a fresh route slate when a frontier move changes the shape o
 license: MIT
 ---
 
-# Nasqret-style route factory
+# Rundumschlag (nasqret-playbook)
+
+*Nasqret-style route factory*
 
 Use when a frontier move changes the shape of the search.
 

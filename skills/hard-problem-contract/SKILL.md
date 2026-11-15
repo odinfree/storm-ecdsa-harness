@@ -3,7 +3,7 @@ name: hard-problem-contract
 description: "Write a contract-style prompt for a hard, precisely decidable problem: an open conjecture, a prove-or-disprove task, or a beat-the-frontier optimization. Use when ordinary prompting returns hedged partial results, special cases, surveys, \"this reduces to another open problem\", or early give-ups on long autonomous runs."
 ---
 
-# Hard-problem contract
+# Chnacknuss (hard-problem-contract)
 
 ## Overview
 

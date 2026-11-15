@@ -3,7 +3,7 @@ name: beachhead-ratchet
 description: "Take a left Pareto move even when it raises Toffoli, under a T budget written down first, then win the cost back on your own tree, attributing every lever to the component the width cut made dearer. Learned from bulengerk's ecdsa.fail record (9 left moves, 61 down rows). Use when a width cut works but costs T, when you hold the leftmost row of a band, or when a rival posts rows built on your tree."
 ---
 
-# Beachhead ratchet
+# Brüggechopf (beachhead-ratchet)
 
 A **beachhead** is a left move taken even though it raises Toffoli: the narrower row is posted first, under a written
 T budget, then the same tree is **ratcheted** down by recovering the cost the width cut added. bulengerk made nine

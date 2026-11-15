@@ -4,7 +4,9 @@ description: "Evidence-discipline recovery for stalled ecdsa.fail work. Use when
 license: MIT
 ---
 
-# PIP evidence discipline
+# Tätschmeischter (pip-discipline)
+
+*PIP evidence discipline*
 
 Use when an agent, operator, or worker has failed twice, is repeating the same
 approach, is about to hand the task back without evidence, or has claimed

@@ -3,7 +3,7 @@ name: fast-lean-proof-loop
 description: "Shorten Lean 4 proof iteration with a warm editor session, dependency-aware reverse-import build plans, and lemma lookup that Lean itself confirms, while a separate full build plus axiom audit stays the promotion gate."
 ---
 
-# Fast Lean proof loop
+# Blitzdiät (fast-lean-proof-loop)
 
 Use this skill while editing a Lean proof inside an already configured project. It reduces feedback latency without weakening the final acceptance gate.
 

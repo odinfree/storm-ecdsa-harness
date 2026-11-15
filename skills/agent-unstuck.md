@@ -4,7 +4,7 @@ description: "Get a stuck agent moving again. Diagnose the actual failure, test 
 license: MIT
 ---
 
-# Agent Unstuck
+# Chnorzlöser (agent-unstuck)
 
 ## Use it from this link
 

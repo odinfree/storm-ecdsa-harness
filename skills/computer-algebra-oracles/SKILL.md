@@ -3,7 +3,7 @@ name: computer-algebra-oracles
 description: "Route exact algebra, finite-field, coding-theory, polynomial-system, group-theory and number-theory questions through SageMath, Magma, OSCAR, Singular, GAP/GUAVA, PARI/GP or Hecke, with replayable evidence and an independent check."
 ---
 
-# Computer algebra oracles
+# Rächeschieber (computer-algebra-oracles)
 
 Use an exact computer-algebra system to expose structure, compute a witness, or falsify a claim. Produce a replayable mathematical receipt; do not silently promote oracle output into a proof.
 

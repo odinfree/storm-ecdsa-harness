@@ -3,7 +3,7 @@ name: constraint-construction-search
 description: "Encode and verify finite construction or optimization searches with CryptoMiniSat, Z3, OR-Tools CP-SAT or Gurobi, including witness extraction, model audits, and calibrated UNSAT or optimality claims."
 ---
 
-# Constraint construction search
+# Zwangsjagge (constraint-construction-search)
 
 Translate a finite mathematical construction problem into constraints, solve it, and verify the result outside the solver. The encoding is a proof obligation, not clerical glue.
 

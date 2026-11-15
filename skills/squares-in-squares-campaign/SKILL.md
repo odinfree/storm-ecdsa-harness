@@ -3,7 +3,7 @@ name: squares-in-squares-campaign
 description: "Pack n = 1..1000 unit squares into the smallest square (Kaggle \"Squares in Squares\", score sum L/sqrt(n) - 1). Use when improving, certifying or submitting packings, or when choosing the next search route. Covers the official-metric gates, the solver and MIS tools, the structure of the frontier, and the routes measured dead. The competition closed on 25 Oct 2026."
 ---
 
-# Squares in Squares campaign
+# Plättlileger (squares-in-squares-campaign)
 
 This is the playbook from our campaign. The campaign repository is private, so the file names below
 describe its layout; rebuild the same pieces in your own tree. Keep a route journal (frontier, routes, kills) that survives

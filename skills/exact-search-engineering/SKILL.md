@@ -3,7 +3,7 @@ name: exact-search-engineering
 description: "Build and verify performance-critical exact searches in FLINT, Nemo, Julia, C++ or Rust when a general computer algebra system is too slow or exhaustive coverage has to be engineered explicitly."
 ---
 
-# Exact search engineering
+# Nadle-im-Heustock (exact-search-engineering)
 
 Turn a mathematically defined finite search into a deterministic search engine and a separate exact verifier. Preserve exactness, coverage, and replay while improving speed.
 

@@ -3,6 +3,8 @@ name: verify-research-transfer
 description: "Check whether a literature finding supports a proposed performance optimization. Read the primary figures and the implementation source, then run a cheap falsifier before writing code or benchmarks."
 ---
 
+# Papiertiger (verify-research-transfer)
+
 Use when a research report or model recommendation is about to guide a concrete optimization. Keep the user's chosen implementation and metric in scope. This skill grants no provider, publication or execution authority.
 
 Bind the report, primary documents and target source revision. Preserve the original report when correcting it. Record publication and revision dates separately; a recent crawl is not a publication date. Use the existing Elicit research skill for API interaction rather than duplicating its client or storing a credential here.

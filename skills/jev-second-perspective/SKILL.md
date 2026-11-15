@@ -3,7 +3,9 @@ name: jev-second-perspective
 description: "Use TypeSafe's Jev as a fast, typed second opinion inside a research or optimization lane. Rank candidate levers by composite score, or check a write-up's claims against a lab log. Pair it with TypeSafe's own typesafe-ai skill, which owns the API and its docs."
 ---
 
-# Jev as a second-perspective judge
+# Schiedsrichterli (jev-second-perspective)
+
+*Jev as a second-perspective judge*
 
 Jev returns typed judgments (Choice, Score, Noul) with probabilities; it does not reason or generate text. Code owns
 retrieval, arithmetic and policy; Jev supplies one narrow judgment per question. Read the typesafe-ai skill and the

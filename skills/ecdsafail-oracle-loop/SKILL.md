@@ -4,7 +4,9 @@ description: "Iterate on an ecdsa.fail route until a fresh official `ecdsafail r
 license: MIT
 ---
 
-# ecdsa.fail oracle loop and route journal
+# Chrischtallchugle (ecdsafail-oracle-loop)
+
+*ecdsa.fail oracle loop and route journal*
 
 Drive a route or lever change to a **harness-verified** result, and never lose route
 state to compaction. Two mechanisms, both lifted from `tanweai/pua` and stripped to the

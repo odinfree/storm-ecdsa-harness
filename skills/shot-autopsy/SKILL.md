@@ -3,7 +3,7 @@ name: shot-autopsy
 description: "When a candidate fails shots its parent passes, find the structural cause before any nonce search. Reconstruct the exact failing shot, localize the first divergence, repair it by paying precision, and keep the case as a permanent regression. Learned from bulengerk's ecdsa.fail rows. Use when an edited candidate fails shots its parent passed, or when counts drift between builds."
 ---
 
-# Shot autopsy
+# Liicheschau (shot-autopsy)
 
 An **autopsy** turns a candidate-only failing shot into a named defect and a permanent regression case before anyone
 reaches for a new nonce. bulengerk's lanes were exact transformations on an inherited approximate circuit: his notes

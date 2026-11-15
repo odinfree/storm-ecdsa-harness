@@ -3,7 +3,7 @@ name: elicit-research
 description: "Search academic literature through the Elicit API: papers, clinical trials, reports, systematic reviews and Research Agent sessions. Use when a question needs published evidence or an outside, literature-backed view. Needs your own Elicit API key."
 ---
 
-# Elicit research
+# Läseratte (elicit-research)
 
 Use the Elicit API directly through `scripts/elicit.py` (Python 3 standard library plus curl). Resolve script paths relative to this skill folder. Authentication comes from `ELICIT_API_KEY`, then `~/.config/elicit/api-key` with mode 600. Never put credentials in skill files, request JSON, output artifacts, or command arguments. The credential file is local configuration and must not be packaged with the skill. The client reads that file itself, so no export is needed. Each OS user or host needs its own copy with the same restricted permissions.
 
