@@ -3,7 +3,7 @@ name: route-compare-probe-discipline
 description: "Compare baseline and candidate on identical input vectors before blaming one call for ecdsa.fail residual or eval dirt. Use when a structural edit changes the op stream, because Fiat-Shamir sampling then tests the two circuits on different shots and can create or hide failures."
 ---
 
-# Route compare probe discipline
+# Öpfel-und-Bire (route-compare-probe-discipline)
 
 ## Job
 

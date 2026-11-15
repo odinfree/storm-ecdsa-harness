@@ -3,7 +3,7 @@ name: mission-command
 description: "Run a bounded technical mission with commander's intent, exact authority and artifact binding, one accountable owner, freedom of action inside stated limits, and a falsifiable ADMIT, COMPLETE or HARD_NACK closeout. Use when someone asks for mission command, hands over a stalled or complex engineering or research effort, or needs several workers coordinated without duplicate work or new authority."
 ---
 
-# Mission Command
+# Chefli (mission-command)
 
 Turn an ambiguous or stalled objective into one executable mission. Preserve
 initiative inside the user's authority while making scope expansion impossible

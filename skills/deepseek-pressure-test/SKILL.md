@@ -4,7 +4,9 @@ description: "Adversarial review before you commit. Before a route change, paid 
 license: MIT
 ---
 
-# External pressure-test worker
+# Dampfchochtopf (deepseek-pressure-test)
+
+*External pressure-test worker*
 
 Use before route changes, paid compute, or directed worker handoffs.
 

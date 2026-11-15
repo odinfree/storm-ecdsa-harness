@@ -3,7 +3,7 @@ name: accepted-proof-exact-retune
 description: "Extract the exact integer dependency model of an accepted Proximity Prize proof, search for the smallest strict 0.01 score step with replayable arithmetic, and formalize only the deltas that survive an independent exact check."
 ---
 
-# Accepted proof exact retune
+# Schrüblidräier (accepted-proof-exact-retune)
 
 Use this skill when the current accepted proof architecture is fixed and the remaining question is whether a source-faithful integer parameter change can gain at least one centibit. It is not a license to treat proof constants as independent knobs.
 

@@ -4,7 +4,9 @@ description: "Score an ecdsa.fail ops.bin exactly like the official eval_circuit
 license: MIT
 ---
 
-# fasteval
+# Schnällrichter (ecdsafail-fasteval)
+
+*fasteval*
 
 BitWonka's exact replica of the challenge's `src/bin/eval_circuit.rs`, from
 [BitWonka/ecdsafail-tools](https://github.com/BitWonka/ecdsafail-tools) `fasteval/` (commit `9f92470`, 11 Oct 2026).

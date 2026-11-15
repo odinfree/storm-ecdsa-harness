@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Divstep Reconstruction"
+  short_description: "Replace stored reversible branch history with successor-state de"
+  default_prompt: "Use $quantum-divstep-reconstruction to develop and falsify a structural circuit hypothesis against the current board contract."

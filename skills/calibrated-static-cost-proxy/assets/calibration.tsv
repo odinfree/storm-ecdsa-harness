@@ -1,0 +1,2 @@
+artefact_sha256	proxy	judge	gap_rel	date	evaluator_commit	note
+<sha256 of the judged artefact>	<expected cost printed by the build>	<judge or replica figure>	<(proxy - judge) / judge>	<yyyy-mm-dd>	<sha>	<what changed since the last row: new block kind, foreign module, post-pass>

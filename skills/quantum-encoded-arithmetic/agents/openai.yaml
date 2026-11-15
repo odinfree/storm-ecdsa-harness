@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Encoded Arithmetic"
+  short_description: "Explore representation-changing arithmetic regions using encoded"
+  default_prompt: "Use $quantum-encoded-arithmetic to develop and falsify a structural circuit hypothesis against the current board contract."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Syndrome Uncomputation"
+  short_description: "Explore syndrome-based deterministic or post-selected uncomputat"
+  default_prompt: "Use $quantum-syndrome-uncompute to develop and falsify a structural circuit hypothesis against the current board contract."

@@ -3,7 +3,7 @@ name: ecdsafail-lowq-playbook
 description: "Cut qubits off a low-Q ecdsa.fail stream (about 670 to 950 Q) the way BitWonka's 25 low-qubit rows did in October 2026 (940 down to 671 Q). Census the binding instant, pick the cut, refactor equivalence-first, budget lambda against the clean-nonce supply, and gate on the exact replica. Use when a precision or lane cut raises lambda, or when porting a rival's low-Q cut onto your tree."
 ---
 
-# ecdsa.fail low-Q playbook
+# Schmalhans (ecdsafail-lowq-playbook)
 
 The loop BitWonka (with Claude Opus 5.5 in Claude Code) ran to take the board's lowest graded Q from 792 to 671 in
 twelve days. Every number below is from his public submission notes, cited `prN.md:line`, where `prN` is pull request N in

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Lifetime Uncomputation"
+  short_description: "Replace coherent uncomputation with lifetime-aware measurement a"
+  default_prompt: "Use $quantum-mbundo-lifetimes to develop and falsify a structural circuit hypothesis against the current board contract."

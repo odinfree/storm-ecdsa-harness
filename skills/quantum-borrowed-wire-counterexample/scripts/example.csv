@@ -1,0 +1,6 @@
+use,frame,shot,enabled,baseline_ok,basis,required
+load,forward,a/1,1,1,0011,1
+load,reverse,a/5,1,1,0011,0
+load,forward,a/2,0,1,0011,0
+load,forward,a/3,1,0,0011,0
+load,forward,b/8,1,1,0011,0

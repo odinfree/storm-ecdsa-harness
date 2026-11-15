@@ -3,6 +3,8 @@ name: rust-archive-build-binding
 description: "Prevent stale Cargo artifacts when a source archive is restored over a reused Rust target directory. Use for reproducible benchmark comparisons and for moving source archives between machines."
 ---
 
+# Roschtchlämmerli (rust-archive-build-binding)
+
 Bind the binary actually tested to the intended source, features, toolchain and flags.
 
 Cargo commonly checks source modification times against dependency information.

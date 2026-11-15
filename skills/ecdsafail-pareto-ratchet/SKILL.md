@@ -3,7 +3,7 @@ name: ecdsafail-pareto-ratchet
 description: "Hold rows on the ecdsa.fail Pareto board the way gnuchev did (167 submissions, 152 of them left moves). Shadow a fresh rival row at the same qubit count with exact cuts that work on any tree, turn one structural move into a band of rows with a single width dial, order the band by contention, and never lose a row to the validator. Use when a rival posts a row you can rebuild, or before submitting a billion-op row."
 ---
 
-# ecdsa.fail Pareto ratchet
+# Rätschi (ecdsafail-pareto-ratchet)
 
 How gnuchev holds most of the low-Q and mid-band Pareto frontier. Every number is from his public submission notes
 (fetch them with `ecdsafail submissions`; cited `<Q>/<id4>:<line>` in

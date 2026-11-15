@@ -4,7 +4,9 @@ description: "Debug a reversible-circuit primitive that is value-exact in isolat
 license: MIT
 ---
 
-# Reversible-circuit edit-integration safety (the "isolation-clean, full-circuit-dirty" desync)
+# Bastelunfall (circuit-edit-integration-safety)
+
+*Reversible-circuit edit-integration safety (the "isolation-clean, full-circuit-dirty" desync)*
 
 Use when a circuit PRIMITIVE (a borrowed-ancilla adder, a measurement-vented uncompute, a new gate
 or vent) tests VALUE-EXACT in isolation (0/0/0 on selftests) but the FULL circuit emits

@@ -3,7 +3,7 @@ name: invariant-chart
 description: "Stop storing register bits that an algebraic relation already determines, and rebuild them where they are read. Two recipes from bulengerk's ecdsa.fail left moves: residue charts from the extended-Euclid relation (mod 4, mod 8), and a joint code for two size registers with a proven sum range. Use when the next qubit must come off an extended-Euclid or size-register binder."
 ---
 
-# Invariant chart
+# Schatzchärtli (invariant-chart)
 
 A **chart** is a cheap map from live state to bits you stopped storing, justified by an algebraic relation of the
 arithmetic. `ecdsafail-lowq-playbook` and `ecdsafail-scratch-diet` already cover proving known bits, derived-size

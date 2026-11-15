@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Structural Lanes"
+  short_description: "Route quantum circuit research into distinct architecture lanes "
+  default_prompt: "Use $quantum-structural-lanes to develop and falsify a structural circuit hypothesis against the current board contract."
