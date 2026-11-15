@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""Read-only Gemini 4 Carbon advisor, via the signed-in Antigravity CLI.
+
+Mirrors fable-advisor: one bounded, self-contained request in, verdict out. No secrets are
+read or printed: agy carries the operator's own Google sign-in. Read-only is asked for in the prompt and
+backed by --sandbox; it is not a hard lock, so treat the model as a reviewer, not as a sandboxed worker.
+AGY_BIN names the CLI binary (default: agy on PATH, then ~/.local/bin/agy).
+"""
+import argparse
+import os
+import shutil
+from pathlib import Path
+import sys
+
+EFFORT_TO_MODEL = {
+    'low': 'gemini-4-carbon-low',
+    'medium': 'gemini-4-carbon-medium',
+    'high': 'gemini-4-carbon-high',
+}
+# Measured 2026-11-14: Argon is the load-bearing model for reading code (audits, census, itemisation);
+# Carbon earns its keep attacking one specific claim. --argon switches the whole ladder.
+ARGON = {k: v.replace('carbon', 'argon') for k, v in EFFORT_TO_MODEL.items()}
+
+parser = argparse.ArgumentParser(description='Read-only Gemini 4 Carbon advisor (Antigravity CLI).')
+parser.add_argument('--effort', choices=sorted(EFFORT_TO_MODEL), default='high')
+parser.add_argument('--argon', action='store_true', help='Use Gemini 4 Argon instead: the right model for reading code')
+parser.add_argument('--model', help='Override the model id (see `agy models`), e.g. gemini-4-argon-high')
+parser.add_argument('--output-format', choices=['text', 'json'], default='text')
+parser.add_argument('--timeout', default='600s', help='Print-mode time limit, e.g. 600s (default) or 0 to wait')
+parser.add_argument('prompt', nargs='?', help='Advisor request; alternatively supply through stdin.')
+args = parser.parse_args()
+
+prompt = args.prompt or sys.stdin.read()
+if not prompt.strip():
+    parser.error('Provide an advisor request')
+
+agy = Path(os.environ.get('AGY_BIN') or shutil.which('agy') or Path.home() / '.local/bin/agy')
+if not agy.exists():
+    sys.exit('Antigravity CLI (agy) not found: install it, sign in once by hand, or set AGY_BIN')
+
+model = args.model or (ARGON if args.argon else EFFORT_TO_MODEL)[args.effort]
+argv = [
+    str(agy),
+    '--model', model,
+    # Not --mode plan: it truncates print mode to the planning preamble on anything needing tool use
+    # (verified 2026-11-13), and --mode auto was refused on our account. Default mode + sandbox it is;
+    # read-only is asked for in the prompt, not enforced by the CLI.
+    '--sandbox',
+    '--print', prompt,
+    '--output-format', args.output_format,
+    '--print-timeout', args.timeout,
+]
+os.execve(str(agy), argv, os.environ.copy())

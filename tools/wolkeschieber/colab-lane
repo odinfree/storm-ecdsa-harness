@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+# colab-lane: run one job on a Colab GPU until it is DONE, then download results and stop the runtime.
+#
+#   colab-lane [-g GPU] [-t MAX_MIN] [-p POLL_S] [-n NAME] [-u LOCAL_FILE]... [-d REMOTE_PATH]... -- CMD
+#
+#   -g  G4 (default, RTX PRO 6000 Blackwell) | H100 | A100 | L4 | T4 | cpu
+#   -m  request a high-RAM machine shape (CPU, T4, A100; ignored for L4 and TPUs)
+#   -t  hard limit in minutes (default 0 = none; enforced even while polls are failing)
+#   -p  poll interval in seconds (default 60, minimum 5)
+#   -n  session name, [A-Za-z0-9_-] only (default lane-<time>-<pid>)
+#   -u  local file to upload to /content/ before the job (repeatable)
+#   -d  remote file to download into ./colab-out/<name>/ when the job ends (repeatable)
+#   CMD shell command run in /content; CUDA and cargo are on PATH
+#
+# The job runs DETACHED on the VM, so a dropped connection or a sleeping Mac does not kill it.
+# Launch and polls use `colab exec`, so the runtime's single ssh slot stays free.
+# The runtime is stopped when the job finishes, fails, hits -t, or the supervisor is signalled.
+# Exit codes: the job's own code; 2 bad usage; 3 could not start; 4 upload failed; 5 launch failed;
+#             98 runtime lost (confirmed, not merely unreachable); 124 time limit; 130 interrupted.
+# A download or stop failure forces a non-zero exit even when the job itself succeeded.
+set -uo pipefail
+
+gpu=G4; himem=0; max_min=0; poll=60; name="lane-$(date +%H%M%S)-$$"; ups=(); downs=()
+usage(){ sed -n '2,18p' "$0"; exit 2; }
+while getopts "g:t:p:n:u:d:m" o; do
+  case $o in g) gpu=$OPTARG;; t) max_min=$OPTARG;; p) poll=$OPTARG;; n) name=$OPTARG;;
+    m) himem=1;; u) ups+=("$OPTARG");; d) downs+=("$OPTARG");; *) usage;; esac
+done
+shift $((OPTIND-1)); [[ "${1:-}" == "--" ]] && shift
+[[ $# -ge 1 ]] || usage
+
+# Validate BEFORE anything billable starts.
+[[ $max_min =~ ^[0-9]+$ ]] || { echo "-t must be whole minutes" >&2; exit 2; }
+[[ $poll =~ ^[0-9]+$ ]] && (( poll >= 5 )) || { echo "-p must be >= 5 seconds" >&2; exit 2; }
+[[ $name =~ ^[A-Za-z0-9_-]+$ ]] || { echo "-n allows only letters, digits, _ and -" >&2; exit 2; }
+if (( $# > 1 )); then printf -v cmd '%q ' "$@"; else cmd="$1"; fi
+seen_names=""
+for r in ${downs[@]+"${downs[@]}"}; do
+  b=$(basename "$r")
+  case " $seen_names " in *" $b "*) echo "duplicate -d basename: $b" >&2; exit 2;; esac
+  seen_names="$seen_names $b"
+done
+
+state=$(mktemp "${TMPDIR:-/tmp}/colab-$name-XXXXXX"); rm -f "$state"
+outdir="colab-out/$name"; mkdir -p "$outdir"; log="$outdir/stream.log"
+C(){ timeout 300 colab --auth=oauth2 --config "$state" "$@" </dev/null; }
+Cexec(){ timeout 180 colab --auth=oauth2 --config "$state" exec -s "$name" 2>/dev/null; }
+say(){ echo "[colab-lane $(date +%H:%M:%S)] $*" >&2; }
+notify(){ osascript -e 'on run {m, t}
+display notification m with title t
+end run' -- "$1" "colab-lane $name" >/dev/null 2>&1 || true; }
+
+caffeinate -dimsw $$ >/dev/null 2>&1 &
+
+started=0; launched=0; exit_penalty=0
+cleanup(){
+  trap '' INT TERM HUP            # a second signal must not abort teardown
+  (( started )) || return
+  kill_remote
+  local r
+  if (( ! launched )) && (( ${#downs[@]} )); then
+    say "skipping ${#downs[@]} download(s): the job never launched, so there is nothing to fetch"
+  fi
+  (( launched )) && for r in ${downs[@]+"${downs[@]}"}; do
+    C download -s "$name" "$r" "$outdir/$(basename "$r")" >/dev/null 2>&1 \
+      || { say "download FAILED: $r"; exit_penalty=1; }
+  done
+  local i err
+  for i in 1 2 3; do
+    err=$(C stop -s "$name" 2>&1); if (( $? == 0 )); then say "stopped $name"; rm -f "$state"; return; fi
+    say "stop attempt $i failed: $(printf '%s' "$err" | tr '\n' ' ' | cut -c1-160)"
+    sleep 5
+  done
+  # A failed stop is only a leak if the runtime is still there. `colab stop` exits 0 on an
+  # already-gone session, so three failures mean a real error — check before crying leak.
+  if ! C sessions 2>/dev/null | grep -Fq -- "$name"; then
+    say "stop reported failure but $name is not on the account — nothing is billing"
+    rm -f "$state"; return
+  fi
+  exit_penalty=1
+  say "WARNING: could not stop $name — state kept at $state; stop it with:"
+  say "  colab --auth=oauth2 --config $state stop -s $name"
+  notify "STOP FAILED - runtime may still bill"
+}
+# Teardown runs once, then the real exit code is re-applied with the penalty.
+finish(){ local rc=$?; cleanup; (( exit_penalty && rc == 0 )) && rc=1; exit "$rc"; }
+trap finish EXIT
+trap 'say "interrupted"; exit 130' INT TERM HUP
+
+kill_remote(){
+  printf '%s\n' 'import os, signal
+try:
+    pid = int(open("/content/colab-lane.pid").read().strip())
+    os.killpg(pid, signal.SIGTERM)
+    print("signalled", pid)
+except Exception as e:
+    print("no job to signal:", e)' | Cexec >/dev/null 2>&1 || true
+}
+
+if [[ $gpu == cpu ]]; then accel=(); else accel=(--gpu "$gpu"); fi
+(( himem )) && accel+=(--high-mem)
+say "starting $name ($gpu$( ((himem)) && echo " high-mem" ), limit: $( ((max_min)) && echo "${max_min}m" || echo none ))"
+started=1                          # set BEFORE the call: an interrupted create can still allocate
+for draw in 1 2 3 4; do
+  C new -s "$name" ${accel[@]+"${accel[@]}"} >&2 2>&1 || { say "could not start runtime"; notify "could not start $gpu"; exit 3; }
+  endpoint=$(python3 -c "
+import json,sys
+try: d=json.load(open('$state'))
+except Exception: print(''); sys.exit()
+print(next((v.get('endpoint','') for v in d.values() if isinstance(v,dict)), ''))" 2>/dev/null)
+  case $endpoint in
+    *euw4*) say "drew europe-west4 ($endpoint): its proxy is unreachable from here — stopping and redrawing ($draw/4)"
+            C stop -s "$name" >/dev/null 2>&1; rm -f "$state"; sleep 3; continue;;
+  esac
+  break
+done
+case ${endpoint:-} in
+  *euw4*) say "four europe-west4 draws in a row; giving up rather than burning a billed runtime"; exit 3;;
+esac
+printf '%s\n' 'import subprocess
+print(subprocess.run("nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || echo cpu", shell=True, capture_output=True, text=True).stdout.strip())' | Cexec >&2
+
+for f in ${ups[@]+"${ups[@]}"}; do
+  C upload -s "$name" "$f" "/content/$(basename "$f")" >&2 2>&1 || { say "upload failed: $f"; exit 4; }
+done
+
+# Wait for background children the job spawns, then report the job's own status.
+{ printf '%s\n' "$cmd"; printf '%s\n' '__colab_rc=$?' 'wait' 'exit $__colab_rc'; } > "$outdir/job.sh"
+C upload -s "$name" "$outdir/job.sh" /content/colab-lane-job.sh >&2 2>&1 || { say "upload failed: job.sh"; exit 4; }
+
+launch_out=$(printf '%s\n' 'import subprocess, os
+for f in ("/content/colab-lane.rc", "/content/colab-lane.log", "/content/colab-lane.pid"):
+    if os.path.exists(f): os.remove(f)
+p = subprocess.Popen(["bash", "-c", "export PATH=/usr/local/cuda/bin:$HOME/.cargo/bin:$PATH; cd /content; bash colab-lane-job.sh > colab-lane.log 2>&1; echo $? > colab-lane.rc"],
+                     start_new_session=True, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+open("/content/colab-lane.pid", "w").write(str(p.pid))
+print("launched")' | Cexec)                      # captured, not piped: grep -q + pipefail would mask success
+case $launch_out in *launched*) launched=1; say "launched (detached)";; *) say "launch failed"; exit 5;; esac
+
+t0=$(date +%s); fails=0; off=0
+while :; do
+  # Time limit first, so failing polls can never outlive -t.
+  if (( max_min > 0 && $(date +%s)-t0 >= max_min*60 )); then
+    say "time limit hit after ${max_min}m"; notify "time limit hit"; exit 124
+  fi
+  sleep "$poll" & wait $!          # backgrounded so signals are handled at once
+
+  out=$(printf '%s\n' "import os
+rc_path, log_path = '/content/colab-lane.rc', '/content/colab-lane.log'
+rc = open(rc_path).read().strip() if os.path.exists(rc_path) else ''
+off = $off
+data = b''
+if os.path.exists(log_path):
+    if os.path.getsize(log_path) < off: off = 0
+    with open(log_path, 'rb') as f:
+        f.seek(off); data = f.read(200000); off = f.tell()
+print('__CL__ rc=%s off=%d' % (rc, off))
+print(data.decode('utf-8', 'replace'), end='')" | Cexec)
+  poll_rc=$?
+
+  meta=$(awk '/^__CL__ rc=/{print; exit}' <<<"$out")
+  if (( poll_rc != 0 )) || [[ -z $meta ]]; then
+    fails=$((fails+1)); say "status poll failed ($fails)"
+    if (( fails >= 3 )); then
+      sessions=$(C sessions 2>&1); sess_rc=$?
+      if (( sess_rc != 0 )); then
+        say "cannot reach Colab either (keeping the runtime; it may still be billing)"
+        case $sessions in *"visit this URL"*|*"authorize"*) say "SIGN-IN EXPIRED: ask the operator to run 'colab --auth=oauth2 usage'"; exit 7;; esac
+      elif ! grep -Fq -- "$name" <<<"$sessions"; then
+        say "RUNTIME LOST (confirmed gone from the server). Partial log: $log"
+        notify "runtime LOST after $(( ($(date +%s)-t0)/60 )) min"
+        exit 98                     # cleanup still runs: stop is a no-op if it is truly gone
+      fi
+    fi
+    continue
+  fi
+  fails=0
+
+  rc=${meta#*rc=}; rc=${rc%% *}
+  new_off=${meta##*off=}
+  body=$(awk 'f{print} /^__CL__ rc=/{f=1}' <<<"$out")
+  [[ -n $body ]] && printf '%s\n' "$body" | tee -a "$log"
+  [[ $new_off =~ ^[0-9]+$ ]] && off=$new_off
+
+  if [[ -n $rc ]]; then
+    say "job finished, exit $rc, after $(( ($(date +%s)-t0)/60 )) min"
+    [[ $rc =~ ^[0-9]+$ ]] || { say "unreadable exit code: $rc"; rc=1; }
+    notify "job done (exit $rc)"
+    exit "$rc"
+  fi
+done

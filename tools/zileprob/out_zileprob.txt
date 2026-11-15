@@ -1,0 +1,10 @@
+cases 169136 (W=16 wires, K=4 rows, classes 0..4, s < 2^5); g = 0 subset 15376
+A_unmasked_natural     raw mismatches  160477  after ideal sign correction  151637  (g=0 only:    7425)  (e,s,g) classes with <=2 offsets 209/961, max offsets 13
+B_unmasked_forced      raw mismatches  160377  after ideal sign correction  151595  (g=0 only:    7425)  (e,s,g) classes with <=2 offsets 279/961, max offsets 13
+C_maskcarry_plainsum   raw mismatches  160033  after ideal sign correction  150931  (g=0 only:   15058)  (e,s,g) classes with <=2 offsets 47/961, max offsets 50
+D_masked_actctl        raw mismatches   84320  after ideal sign correction       0  (g=0 only:       0)  (e,s,g) classes with <=2 offsets 961/961, max offsets 2
+A_unmasked_natural per class (cases, wrong after correction): {0: (496, 495), 1: (1984, 1980), 2: (7936, 7870), 3: (31744, 31300), 4: (126976, 109992)}
+B_unmasked_forced per class (cases, wrong after correction): {0: (496, 495), 1: (1984, 1980), 2: (7936, 7818), 3: (31744, 31310), 4: (126976, 109992)}
+C_maskcarry_plainsum per class (cases, wrong after correction): {0: (496, 495), 1: (1984, 1892), 2: (7936, 7856), 3: (31744, 30568), 4: (126976, 110120)}
+CCX per plain wire per row: restoring 3; forms A, B 2; form C 2 on the sum-unmasked wires; form D 3.
+positive control: class K (all rows active), g=0, form A: 7936 cases, wrong 0

@@ -1,0 +1,8 @@
+{
+  "edits": {
+    "src/point_add/mod.rs": [
+      ["pub const NONCE: usize = 411;", "pub const NONCE: usize = {NONCE};"],
+      ["const LEVER_X: bool = true;", "const LEVER_X: bool = {LEVER_X};"]
+    ]
+  }
+}
