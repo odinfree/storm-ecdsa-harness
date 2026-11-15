@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Record Mining"
+  short_description: "Recover overlooked circuit gains before new paper research"
+  default_prompt: "Use $quantum-record-mining to triage existing circuit results and cross-family mechanisms against the current frontier without changing active lanes."

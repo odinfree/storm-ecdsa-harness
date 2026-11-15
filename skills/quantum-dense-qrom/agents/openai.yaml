@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Dense QROM"
+  short_description: "Evaluate dense Pauli-encoded QROM and packetized lookup as a str"
+  default_prompt: "Use $quantum-dense-qrom to develop and falsify a structural circuit hypothesis against the current board contract."

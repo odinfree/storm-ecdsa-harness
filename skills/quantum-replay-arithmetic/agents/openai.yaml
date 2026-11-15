@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Replay Arithmetic"
+  short_description: "Co-design reversible GCD walks, transcript encodings and payload"
+  default_prompt: "Use $quantum-replay-arithmetic to develop and falsify a structural circuit hypothesis against the current board contract."

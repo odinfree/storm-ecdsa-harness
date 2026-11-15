@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantum Verified Architecture Search"
+  short_description: "Run evaluator-guided structural circuit search with independent "
+  default_prompt: "Use $quantum-verified-architecture-search to develop and falsify a structural circuit hypothesis against the current board contract."
